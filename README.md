@@ -1,11 +1,27 @@
 # Anatree
 
 [![LGPL-3.0 License](https://img.shields.io/badge/license-LGPL%203.0-blue.svg)](COPYING.LESSER.md)
-&nbsp;
 
 The (mixed) Anatree [[Reams2012](#references)] provides a data structure
 optimised for solving some subset of *Constraint Satisfaction Problems* (CPSs),
 e.g. finding within a dictionary all (sub)anagrams of a given word.
+
+## Implementations
+
+### C++
+
+[![cpp/test](https://github.com/SSoelvsten/anatree/actions/workflows/cpp_test.yml/badge.svg)](https://github.com/SSoelvsten/anatree/actions/workflows/cpp__test.yml)
+&nbsp;
+[![codecov](https://codecov.io/gh/SSoelvsten/anatree/branch/main/graph/badge.svg?token=j4JA35K7Ec)](https://codecov.io/gh/SSoelvsten/anatree)
+
+- [`cpp/main`](https://github.com/ssoelvsten/anatree/tree/cpp/main)
+
+  Development branch for the C++ implementation, including tests and more.
+
+- [`cpp/header-only`](https://github.com/ssoelvsten/anatree/tree/cpp/header-only)
+
+  This only includes the *anatree.h* file and its CMake for inclusion in your
+  project as a submodule.
 
 ## License
 
