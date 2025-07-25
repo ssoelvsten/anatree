@@ -1,9 +1,9 @@
-name: 'Publish header-only branch'
+name: 'Publish to cpp/header-only'
 
 on:
   push:
     branches:
-    - main
+    - cpp/main
 
 jobs:
   skip:
@@ -21,7 +21,7 @@ jobs:
       should_skip: ${{ steps.skip_check.outputs.should_skip == 'true' }}
 
   publish:
-    name: 'Publish to header-only'
+    name: 'Publish to cpp/header-only'
     runs-on: ubuntu-latest
 
     needs: skip
@@ -32,5 +32,5 @@ jobs:
 
     - uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
-        branch: header-only
+        branch: cpp/header-only
         folder: ${{github.workspace}}/anatree/

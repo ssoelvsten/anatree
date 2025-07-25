@@ -2,13 +2,13 @@ name: 'test'
 
 on:
   push:
-    branches: [ main ]
+    branches: [ cpp/main ]
   pull_request:
-    branches: [ main ]
+    branches: [ cpp/main ]
 
 jobs:
   test:
-    name: 'Unit test (incl. code coverage)'
+    name: 'Unit Test + Coverage (C++)'
     runs-on: ubuntu-latest
 
     steps:
