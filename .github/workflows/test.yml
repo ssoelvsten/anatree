@@ -38,14 +38,14 @@ jobs:
 
     - name: Run unit tests
       working-directory: ${{runner.workspace}}/build
-      run: ./test/anatree_test --reporter=info --colorizer=light
+      run: ./tests/anatree_test --reporter=info --colorizer=light
 
     - name: Generate code coverage report
       working-directory: ${{runner.workspace}}
       if: always()
       run: |
         lcov -c -d build/ -o ./coverage.info
-        lcov --remove coverage.info --output-file coverage.info "/usr/*" "*/external/*" "*test*"
+        lcov --ignore-errors empty --remove coverage.info --output-file coverage.info "/usr/*" "*/external/*" "*tests*"
 
     - name: Upload report to Codecov.io
       working-directory: ${{runner.workspace}}
