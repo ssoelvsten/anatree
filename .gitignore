@@ -10,4 +10,4 @@ build/
 ######################
 # LCOV
 coverage.info
-test/report
+tests/report

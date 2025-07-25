@@ -19,7 +19,7 @@ For ease of use, we provide the following *make* targets.
 | `clean`     | Removes all build files               |
 | `install`   | Installs Anatree                      |
 | `uninstall` | Removes the installed files once more |
-| `test`      | Builds and runs the unit tests        |
+| `tests`     | Builds and runs the unit tests        |
 | `docs`      | Builds the Doxygen Documentation      |
 
 ### CMake Dependency
@@ -58,7 +58,7 @@ to include submodules, please do
 git submodule update --init --recursive
 ```
 
-You can run the unit tests using the `test` *make* target mentioned above or
+You can run the unit tests using the `tests` *make* target mentioned above or
 with the following commands.
 
 ```bash
@@ -66,7 +66,7 @@ mkdir -p build/
 cd build/
 cmake -D CMAKE_BUILD_TYPE=Debug ..
 make anatree_test
-./test/anatree_test
+./tests/anatree_test
 cd ..
 ```
 ## License
