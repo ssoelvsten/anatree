@@ -1,4 +1,4 @@
-name: 'Publish to cpp/header-only'
+name: 'cpp/header-only'
 
 on:
   push:
@@ -6,29 +6,14 @@ on:
     - cpp/main
 
 jobs:
-  skip:
-    name: 'Skip Job?'
-    continue-on-error: true
-    runs-on: ubuntu-latest
-
-    steps:
-      - id: skip_check
-        uses: fkirc/skip-duplicate-actions@master
-        with:
-          paths: '["anatree/**"]'
-
-    outputs:
-      should_skip: ${{ steps.skip_check.outputs.should_skip == 'true' }}
-
   publish:
     name: 'Publish to cpp/header-only'
     runs-on: ubuntu-latest
 
-    needs: skip
-    if: ${{ needs.skip.outputs.should_skip != 'true' }}
-
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+      with:
+        ref: cpp/main
 
     - uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
