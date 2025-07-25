@@ -2,7 +2,7 @@
 
 [![LGPL-3.0 License](https://img.shields.io/badge/license-LGPL%203.0-blue.svg)](COPYING.LESSER.md)
 &nbsp;
-[![test](https://github.com/SSoelvsten/anatree/actions/workflows/test.yml/badge.svg)](https://github.com/SSoelvsten/anatree/actions/workflows/test.yml)
+[![tests](https://github.com/SSoelvsten/anatree/actions/workflows/cpp_test.yml/badge.svg)](https://github.com/SSoelvsten/anatree/actions/workflows/cpp_test.yml)
 &nbsp;
 [![codecov](https://codecov.io/gh/SSoelvsten/anatree/branch/main/graph/badge.svg?token=j4JA35K7Ec)](https://codecov.io/gh/SSoelvsten/anatree)
 
