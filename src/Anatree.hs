@@ -1,29 +1,40 @@
--- | The `Tree` type represents a dictionary of words, [`Char`]. The tree is
---   designed specifically such that one can easily query for (sub)anagrams,
---   i.e. words /w/ and /w'/ where /sort w/ and /sort w'/ are equivalent.
---   The time to do most of these operations are mainly dependent on the size of
---   the tree, /t/, and the alphabet, |Σ|, and not the number of words stored,
---   /n/.
+-- | The `Tree` type represents a dictionary of words, [/s/], over symbols from
+--   some alphabet, Σ. Most operations require that /s/ be an instance of the
+--   `Data.Ord` class.
+--
+--   The tree is designed specifically to make it easy to query for
+--   (sub)anagrams, i.e. words /w/ and /w'/ where /sort w/ and /sort w'/ are
+--   equivalent. The time to do most of these operations are mainly dependent on
+--   the size of the tree, /t/, and the alphabet, |Σ|, and not the number of
+--   words stored, /n/.
+--
+--   This module is intended to be imported qualified. That is, please import it
+--   as follows:
+--
+--   @import qualified Anatree as Anatree@
+--
+--   Each set of anagrams are stored using `Data.Set`, meaning that no more than
+--   @maxBound::Int@ many anagrams may be stored at once.
 module Anatree where
 import qualified Data.Set as Set
 import Data.List (sort)
 
 -- * Tree Type
 
--- | Each node in the tree contains a `Data.Set` `Char` with the words that are each
---   others' anagrams. Each `Node` is contains binary choice of whether a
+-- | Each node in the tree contains a `Data.Set` `Char` with the words that are
+--   each others' anagrams. Each `Node` contains a binary choice of whether a
 --   certain character is at a certain position in the normalized (sorted) word.
-data Tree = Leaf (Set.Set [Char])
-          | Node (Set.Set [Char]) Char Tree Tree
+data Tree s = Leaf (Set.Set [s])
+            | Node (Set.Set [s]) s (Tree s) (Tree s)
 
 -- * Construction
 
 -- | /O/(1) Creates an empty anagram tree.
-empty :: Tree
+empty :: Tree s
 empty = Leaf (Set.empty)
 
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Add word to the set.
-insert :: [Char] -> Tree -> Tree
+insert :: Ord s => [s] -> Tree s -> Tree s
 insert w t = insert' (sort w) t
   where insert' []     (Leaf ws)         = Leaf (Set.insert w ws)
         insert' []     (Node ws c t0 t1) = Node (Set.insert w ws) c t0 t1
@@ -36,7 +47,7 @@ insert w t = insert' (sort w) t
 -- * Queries
 
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Is the word in the set?
-member :: [Char] -> Tree -> Bool
+member :: Ord s => [s] -> Tree s -> Bool
 member w t = member' (sort w) t
   where member' []     (Leaf ws)         = Set.member w ws
         member' []     (Node ws _  _ _)  = Set.member w ws
@@ -47,17 +58,17 @@ member w t = member' (sort w) t
                       else member' xs     t1
 
 -- | /O/(1) Is this the empty set?
-null :: Tree -> Bool
+null :: Tree s -> Bool
 null (Leaf ws) = Set.null ws
 null _         = False
 
 -- | /O/(/t/) Number of elements in the set.
-size :: Tree -> Int
+size :: Tree s -> Int
 size (Leaf ws)         =  Set.size ws
 size (Node ws _ t0 t1) = (Set.size ws) + (size t0) + (size t1)
 
 -- | /O/(/t/) Size of the tree itself.
-treeSize :: Tree -> Int
+treeSize :: Tree s -> Int
 treeSize (Leaf _)         = 1
 treeSize (Node _ _ t0 t1) = 1 + (treeSize t0) + (treeSize t1)
 
