@@ -9,6 +9,7 @@ tests_Empty :: Test.HUnit.Test
 tests_Empty = let t = Anatree.empty
   in "{}" ~: Test.HUnit.TestList [
   "size"        ~: 0     ~=? (Anatree.size t),
+  "null"        ~: True  ~=? (Anatree.null t),
   "treeSize"    ~: 1     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: False ~=? (Anatree.member "a" t),
@@ -22,6 +23,7 @@ tests_Eta :: Test.HUnit.Test
 tests_Eta = let t = Anatree.insert "" $ Anatree.empty
   in "{''}" ~: Test.HUnit.TestList [
   "size"        ~: 1     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 1     ~=? (Anatree.treeSize t),
   "member ''"   ~: True  ~=? (Anatree.member "" t),
   "member 'a'"  ~: False ~=? (Anatree.member "a" t),
@@ -36,6 +38,7 @@ tests_A :: Test.HUnit.Test
 tests_A = let t = Anatree.insert "a" $ Anatree.empty
   in "{'a'}" ~: Test.HUnit.TestList [
   "size"        ~: 1     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 3     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: True  ~=? (Anatree.member "a" t),
@@ -49,6 +52,7 @@ tests_A_A :: Test.HUnit.Test
 tests_A_A = let t = Anatree.insert "a" $ Anatree.insert "a" $ Anatree.empty
   in "{'a', 'a'}" ~: Test.HUnit.TestList [
   "size"        ~: 1     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 3     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: True  ~=? (Anatree.member "a" t),
@@ -62,6 +66,7 @@ tests_A_Eta :: Test.HUnit.Test
 tests_A_Eta = let t = Anatree.insert "a" $ Anatree.insert "" $ Anatree.empty
   in "{'a', ''}" ~: Test.HUnit.TestList [
   "size"        ~: 2     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 3     ~=? (Anatree.treeSize t),
   "member ''"   ~: True  ~=? (Anatree.member "" t),
   "member 'a'"  ~: True  ~=? (Anatree.member "a" t),
@@ -76,6 +81,7 @@ tests_B :: Test.HUnit.Test
 tests_B = let t = Anatree.insert "b" Anatree.empty
   in "{'b'}" ~: Test.HUnit.TestList [
   "size"        ~: 1     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 3     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: False ~=? (Anatree.member "a" t),
@@ -90,6 +96,7 @@ tests_A_B :: Test.HUnit.Test
 tests_A_B = let t = Anatree.insert "a" $ Anatree.insert "b" $ Anatree.empty
   in "{'a','b'}" ~: Test.HUnit.TestList [
   "size"        ~: 2     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 5     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: True  ~=? (Anatree.member "a" t),
@@ -103,6 +110,7 @@ tests_B_A :: Test.HUnit.Test
 tests_B_A = let t = Anatree.insert "b" $ Anatree.insert "a" $ Anatree.empty
   in "{'b','a'}" ~: Test.HUnit.TestList [
   "size"        ~: 2     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 5     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: True  ~=? (Anatree.member "a" t),
@@ -116,6 +124,7 @@ tests_AB_BA :: Test.HUnit.Test
 tests_AB_BA = let t = Anatree.insert "ab" $ Anatree.insert "ba" $ Anatree.empty
   in "{'ab','ba'}" ~: Test.HUnit.TestList [
   "size"        ~: 2     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 5     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: False ~=? (Anatree.member "a" t),
@@ -129,6 +138,7 @@ tests_BA_AB :: Test.HUnit.Test
 tests_BA_AB = let t = Anatree.insert "ba" $ Anatree.insert "ab" $ Anatree.empty
   in "{'ba','ab'}" ~: Test.HUnit.TestList [
   "size"        ~: 2     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 5     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: False ~=? (Anatree.member "a" t),
@@ -143,6 +153,7 @@ tests_A_AB_A = let t = Anatree.insert "a" $ Anatree.insert "ab"
                      $ Anatree.insert "a" $ Anatree.empty
   in "{'a','ab', 'a'}" ~: Test.HUnit.TestList [
   "size"        ~: 2     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 5     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: True  ~=? (Anatree.member "a" t),
@@ -157,6 +168,7 @@ tests_AB_B :: Test.HUnit.Test
 tests_AB_B = let t = Anatree.insert "ab" $ Anatree.insert "b" $ Anatree.empty
   in "{'ab','b'}" ~: Test.HUnit.TestList [
   "size"        ~: 2     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 7     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: False ~=? (Anatree.member "a" t),
@@ -171,6 +183,7 @@ tests_B_AB_B = let t = Anatree.insert "b" $ Anatree.insert "ab"
                      $ Anatree.insert "b" $ Anatree.empty
   in "{'b','ab', 'b'}" ~: Test.HUnit.TestList [
   "size"        ~: 2     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 7     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: False ~=? (Anatree.member "a" t),
@@ -185,6 +198,7 @@ tests_BA_AB_B = let t = Anatree.insert "ba" $ Anatree.insert "ab"
                       $ Anatree.insert "b"  $ Anatree.empty
   in "{'ba','ab', 'b'}" ~: Test.HUnit.TestList [
   "size"        ~: 3     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 7     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: False ~=? (Anatree.member "a" t),
@@ -200,6 +214,7 @@ tests_Eta_BA_A_AB_B = let t = Anatree.insert ""  $ Anatree.insert "ba"
                             $ Anatree.insert "b" $ Anatree.empty
   in "{'', 'ba', 'a', 'ab', 'b'}" ~: Test.HUnit.TestList [
   "size"        ~: 5     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 7     ~=? (Anatree.treeSize t),
   "member ''"   ~: True  ~=? (Anatree.member "" t),
   "member 'a'"  ~: True  ~=? (Anatree.member "a" t),
@@ -215,6 +230,7 @@ tests_BA_A_AC = let t = Anatree.insert "ba" $ Anatree.insert "a"
                       $ Anatree.insert "ac" $ Anatree.empty
   in "{'ba', 'a', 'ac'}" ~: Test.HUnit.TestList [
   "size"        ~: 3     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 7     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: True  ~=? (Anatree.member "a" t),
@@ -229,6 +245,7 @@ tests_BA_AC :: Test.HUnit.Test
 tests_BA_AC = let t = Anatree.insert "ba"  $ Anatree.insert "ac" $ Anatree.empty
   in "{'ba', 'ac'}" ~: Test.HUnit.TestList [
   "size"        ~: 2     ~=? (Anatree.size t),
+  "null"        ~: False ~=? (Anatree.null t),
   "treeSize"    ~: 7     ~=? (Anatree.treeSize t),
   "member ''"   ~: False ~=? (Anatree.member "" t),
   "member 'a'"  ~: False ~=? (Anatree.member "a" t),

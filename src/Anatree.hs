@@ -46,6 +46,11 @@ member w t = member' (sort w) t
              if x > c then member' (x:xs) t0
                       else member' xs     t1
 
+-- | /O/(1) Is this the empty set?
+null :: Tree -> Bool
+null (Leaf ws) = Set.null ws
+null _         = False
+
 -- | /O/(/t/) Number of elements in the set.
 size :: Tree -> Int
 size (Leaf ws)         =  Set.size ws
