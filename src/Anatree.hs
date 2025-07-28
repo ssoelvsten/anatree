@@ -57,6 +57,10 @@ member w t = member' (sort w) t
              if x > c then member' (x:xs) t0
                       else member' xs     t1
 
+-- | /O/(/|w|/ log /|w|/ + |Σ|) Is the word not in the set?
+notMember :: Ord s => [s] -> Tree s -> Bool
+notMember w t = not (member w t)
+
 -- | /O/(1) Is this the empty set?
 null :: Tree s -> Bool
 null (Leaf ws) = Set.null ws
