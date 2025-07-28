@@ -29,7 +29,11 @@ tests_Empty = let t = Anatree.fromList [] :: Anatree.Tree Char
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList []) ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList []) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t),
+  "toList"          ~: [] ~=? (Anatree.toList t),
+  "toAscList"       ~: [] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: [] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList []) ~=? (Anatree.toSet t)
   ]
 
 tests_Eta :: Test.HUnit.Test
@@ -55,7 +59,11 @@ tests_Eta = let t = Anatree.fromList [""]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList [])   ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList [""]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t),
+  "toList"          ~: [""] ~=? (Anatree.toList t),
+  "toAscList"       ~: [""] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: [""] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList [""]) ~=? (Anatree.toSet t)
   ]
 
 -- Tests with a single 'a' node [2]
@@ -82,7 +90,11 @@ tests_A = let t = Anatree.fromList ["a"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList [])    ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList ["a"]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["a"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["a"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["a"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["a"]) ~=? (Anatree.toSet t)
   ]
 
 tests_A_A :: Test.HUnit.Test
@@ -108,7 +120,11 @@ tests_A_A = let t = Anatree.fromList ["a", "a"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList [])    ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList ["a"]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["a"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["a"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["a"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["a"]) ~=? (Anatree.toSet t)
   ]
 
 tests_Eta_A :: Test.HUnit.Test
@@ -134,7 +150,11 @@ tests_Eta_A = let t = Anatree.fromList ["", "a"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList [])        ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList ["", "a"]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["", "a"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["", "a"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["a", ""] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["", "a"]) ~=? (Anatree.toSet t)
   ]
 
 -- Tests with a single 'b' node [2]
@@ -161,7 +181,11 @@ tests_B = let t = Anatree.fromList ["b"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList []) ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList []) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["b"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["b"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["b"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["b"]) ~=? (Anatree.toSet t)
   ]
 
 -- Tests with an 'a,b' chain [2]
@@ -188,7 +212,11 @@ tests_A_B = let t = Anatree.fromList ["a", "b"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList [])    ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList ["a"]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["b", "a"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["a", "b"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["b", "a"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["a", "b"]) ~=? (Anatree.toSet t)
   ]
 
 tests_B_A :: Test.HUnit.Test
@@ -214,7 +242,11 @@ tests_B_A = let t = Anatree.fromList ["b", "a"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList [])    ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList ["a"]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList []) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["b", "a"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["a", "b"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["b", "a"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["a", "b"]) ~=? (Anatree.toSet t)
   ]
 
 tests_AB_BA :: Test.HUnit.Test
@@ -240,7 +272,11 @@ tests_AB_BA = let t = Anatree.fromList ["ab", "ba"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList []) ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList []) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["ab", "ba"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["ab", "ba"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["ba", "ab"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.toSet t)
   ]
 
 tests_BA_AB :: Test.HUnit.Test
@@ -266,7 +302,11 @@ tests_BA_AB = let t = Anatree.fromList ["ba", "ab"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList []) ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList []) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["ab", "ba"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["ab", "ba"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["ba", "ab"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.toSet t)
   ]
 
 tests_A_AB_A :: Test.HUnit.Test
@@ -292,7 +332,11 @@ tests_A_AB_A = let t = Anatree.fromList ["a", "ab", "a"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList [])    ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList ["a"]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["a", "ab"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["a", "ab"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["ab", "a"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["a", "ab"]) ~=? (Anatree.toSet t)
   ]
 
 -- Tests with one 'a' node and two 'b' nodes.
@@ -319,7 +363,41 @@ tests_B_AB = let t = Anatree.fromList ["b", "ab"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList []) ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList []) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["b", "ab"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["ab", "b"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["b", "ab"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["ab", "b"]) ~=? (Anatree.toSet t)
+  ]
+
+tests_B_BA :: Test.HUnit.Test
+tests_B_BA = let t = Anatree.fromList ["b", "ba"]
+  in "['b','ba']" ~: Test.HUnit.TestList [
+  "size"            ~: 2     ~=? (Anatree.size t),
+  "null"            ~: False ~=? (Anatree.null t),
+  "treeSize"        ~: 7     ~=? (Anatree.treeSize t),
+  "member ''"       ~: False ~=? (Anatree.member "" t),
+  "notMember ''"    ~: True  ~=? (Anatree.notMember "" t),
+  "keys 0"          ~: (Set.fromList []) ~=? (Anatree.keys 0 t),
+  "member 'a'"      ~: False ~=? (Anatree.member "a" t),
+  "notMember 'a'"   ~: True  ~=? (Anatree.notMember "a" t),
+  "member 'b'"      ~: True  ~=? (Anatree.member "b" t),
+  "notMember 'b'"   ~: False ~=? (Anatree.notMember "b" t),
+  "keys 1"          ~: (Set.fromList ["b"]) ~=? (Anatree.keys 1 t),
+  "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList ["ba"])      ~=? (Anatree.anagrams "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["b", "ba"]) ~=? (Anatree.subanagrams "ab" t),
+  "member 'ba'"     ~: True  ~=? (Anatree.member "ba" t),
+  "anagram 'ba'"    ~: (Set.fromList ["ba"])      ~=? (Anatree.anagrams "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["b", "ba"]) ~=? (Anatree.subanagrams "ab" t),
+  "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
+  "anagram 'ac'"    ~: (Set.fromList []) ~=? (Anatree.anagrams "ac" t),
+  "subanagram 'ac'" ~: (Set.fromList []) ~=? (Anatree.subanagrams "ac" t),
+  "keys 2"          ~: (Set.fromList ["ba"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["b", "ba"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["b", "ba"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["ba", "b"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["ba", "b"]) ~=? (Anatree.toSet t)
   ]
 
 tests_B_AB_B :: Test.HUnit.Test
@@ -345,7 +423,11 @@ tests_B_AB_B = let t = Anatree.fromList ["b", "ab", "b"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList []) ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList []) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["b", "ab"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["ab", "b"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["b", "ab"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["ab", "b"]) ~=? (Anatree.toSet t)
   ]
 
 tests_B_AB_BA :: Test.HUnit.Test
@@ -371,7 +453,11 @@ tests_B_AB_BA = let t = Anatree.fromList ["b", "ab", "ba"]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList []) ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList []) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["b", "ab", "ba"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["ab", "b", "ba"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["ba", "b", "ab"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["ab", "ba", "b"]) ~=? (Anatree.toSet t)
   ]
 
 tests_B_AB_A_BA_Eta :: Test.HUnit.Test
@@ -397,7 +483,11 @@ tests_B_AB_A_BA_Eta = let t = Anatree.fromList ["b", "ab", "a", "ba", ""]
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList [])        ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList ["", "a"]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList ["ab"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["", "b", "a", "ab", "ba"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["", "a", "ab", "b", "ba"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["ba", "b", "ab", "a", ""] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["", "a", "ab", "ba", "b"]) ~=? (Anatree.toSet t)
   ]
 
 -- An 'abc' chain.
@@ -424,7 +514,11 @@ tests_AC_BA = let t = Anatree.fromList ["ac", "ba"]
   "member 'ac'"     ~: True  ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList ["ac"]) ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList ["ac"]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList ["ba","ac"]) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList ["ba","ac"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["ac", "ba"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["ac", "ba"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["ba", "ac"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["ba", "ac"]) ~=? (Anatree.toSet t)
   ]
 
 tests_AC_A_BA :: Test.HUnit.Test
@@ -450,7 +544,11 @@ tests_AC_A_BA = let t = Anatree.fromList ["ac", "a", "ba"]
   "member 'ac'"     ~: True  ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList ["ac"])      ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList ["a", "ac"]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList ["ba","ac"]) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList ["ba","ac"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["a", "ac", "ba"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["a", "ac", "ba"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["ba", "ac", "a"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["a", "ba", "ac"]) ~=? (Anatree.toSet t)
   ]
 
 -- Tree with a common 'a' node and then splitting into 'b' and 'c' subtrees
@@ -477,7 +575,11 @@ tests_AC_B_A = let t = Anatree.fromList ["ac", "b", "a"]
   "member 'ac'"     ~: True  ~=? (Anatree.member "ac" t),
   "anagram 'ac'"    ~: (Set.fromList ["ac"])      ~=? (Anatree.anagrams "ac" t),
   "subanagram 'ac'" ~: (Set.fromList ["a", "ac"]) ~=? (Anatree.subanagrams "ac" t),
-  "keys 2"          ~: (Set.fromList ["ac"]) ~=? (Anatree.keys 2 t)
+  "keys 2"          ~: (Set.fromList ["ac"]) ~=? (Anatree.keys 2 t),
+  "toList"          ~: ["b", "a", "ac"] ~=? (Anatree.toList t),
+  "toAscList"       ~: ["a", "ac", "b"] ~=? (Anatree.toAscList t),
+  "toDescList"      ~: ["b", "ac", "a"] ~=? (Anatree.toDescList t),
+  "toSet"           ~: (Set.fromList ["a", "ac", "b"]) ~=? (Anatree.toSet t)
   ]
 
 -- hUnitTestToTests: Adapt an existing HUnit test into a list of test-framework tests
@@ -488,8 +590,8 @@ tests = hUnitTestToTests $ TestList [
   tests_A, tests_A_A, tests_Eta_A,
   tests_B,
   tests_A_B, tests_B_A, tests_BA_AB, tests_AB_BA, tests_A_AB_A,
-  tests_B_AB, tests_B_AB_BA, tests_B_AB_B, tests_B_AB_A_BA_Eta,
-  tests_AC_A_BA, tests_AC_BA,
+  tests_B_AB, tests_B_BA, tests_B_AB_B, tests_B_AB_BA, tests_B_AB_A_BA_Eta,
+  tests_AC_BA, tests_AC_A_BA, tests_AC_A_BA,
   tests_AC_B_A
   ]
 

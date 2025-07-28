@@ -17,7 +17,8 @@
 --   @maxBound::Int@ many anagrams may be stored at once.
 module Anatree where
 import qualified Data.Set as Set
-import Data.List (sort)
+import qualified Data.Ord as Ord
+import qualified Data.List as List
 
 -- * Tree Type
 
@@ -35,13 +36,13 @@ empty = Leaf (Set.empty)
 
 -- | Repeated use of `insert` into an `empty` anagram tree.
 fromList :: Ord s => [[s]] -> Tree s
-fromList ws = foldr insert empty ws
+fromList ws = Prelude.foldr insert empty ws
 
 -- * Insertion
 
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Add word to the set.
 insert :: Ord s => [s] -> Tree s -> Tree s
-insert w t = insert' (sort w) t
+insert w t = insert' (List.sort w) t
   where insert' []     (Leaf ws)         = Leaf (Set.insert w ws)
         insert' []     (Node ws c t0 t1) = Node (Set.insert w ws) c t0 t1
         insert' (x:xs) (Leaf ws)         = Node ws x empty (insert' xs empty)
@@ -54,7 +55,7 @@ insert w t = insert' (sort w) t
 
 -- | /O/(/|w|/ log /|w|/ + |Σ|) The anagrams that exists in the set.
 anagrams :: Ord s => [s] -> Tree s -> Set.Set [s]
-anagrams w t = anagrams' (sort w) t
+anagrams w t = anagrams' (List.sort w) t
   where anagrams' []     (Leaf ws)        = ws
         anagrams' []     (Node ws _ _ _)  = ws
         anagrams' _      (Leaf _)         = Set.empty
@@ -72,7 +73,7 @@ notMember w t = not (member w t)
 
 -- | /O/(/|w|/ log /|w|/ + m(|Σ| /|w|/)) The subanagrams that exists in the set.
 subanagrams :: Ord s => [s] -> Tree s -> Set.Set [s]
-subanagrams w t = subanagrams' (sort w) t
+subanagrams w t = subanagrams' (List.sort w) t
   where subanagrams' _      (Leaf ws)       = ws
         subanagrams' []     (Node ws _ _ _) = ws
         subanagrams' (x:xs) t'              = let (Node ws c t0 t1) = t'
@@ -102,3 +103,34 @@ treeSize :: Tree s -> Int
 treeSize (Leaf _)         = 1
 treeSize (Node _ _ t0 t1) = 1 + (treeSize t0) + (treeSize t1)
 
+-- * Folds
+
+-- | Fold the words in the set using a right-associative binary operator.
+foldr :: ([s] -> t -> t) -> t -> Tree s -> t
+foldr f x (Leaf ws)         = Set.foldr f x ws
+foldr f x (Node ws _ t0 t1) = let x'  = Anatree.foldr f x  t1
+                                  x'' = Anatree.foldr f x' t0
+                              in Set.foldr f x'' ws
+
+-- * Conversion
+-- ** List
+
+-- | An alias of `toList`.
+elems :: Tree s -> [[s]]
+elems t = toList t
+
+-- | Convert the set to a list of elements.
+toList :: Tree s -> [[s]]
+toList t = Anatree.foldr (:) [] t
+
+-- | Convert the set into an ascending list of elements.
+toAscList :: Ord s => Tree s -> [[s]]
+toAscList t = List.sort (toList t)
+
+-- | Convert the set into a descending list of elements.
+toDescList :: Ord s => Tree s -> [[s]]
+toDescList t = List.sortBy (Ord.comparing Ord.Down) (toList t)
+
+-- ** Set
+toSet :: Ord s => Tree s -> Set.Set [s]
+toSet t = Anatree.foldr Set.insert Set.empty t
