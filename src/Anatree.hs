@@ -5,8 +5,8 @@
 --   The tree is designed specifically to make it easy to query for
 --   (sub)anagrams, i.e. words /w/ and /w'/ where /sort w/ and /sort w'/ are
 --   equivalent. The time to do most of these operations are mainly dependent on
---   the size of the tree, /t/, and the alphabet, |Σ|, and not the number of
---   words stored, /n/.
+--   the size of the tree, /t/, the alphabet, |Σ|, the output, /m/, and not the
+--   number of words stored, /n/.
 --
 --   This module is intended to be imported qualified. That is, please import it
 --   as follows:
@@ -63,6 +63,16 @@ member w t = Set.member w (anagram w t)
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Is the word not in the set?
 notMember :: Ord s => [s] -> Tree s -> Bool
 notMember w t = not (member w t)
+
+-- | /O/(/|w|/ log /|w|/ + m(|Σ| /|w|/)) The subanagrams that exists in the set.
+subanagram :: Ord s => [s] -> Tree s -> Set.Set [s]
+subanagram w t = subanagram' (sort w) t
+  where subanagram' _      (Leaf ws)       = ws
+        subanagram' []     (Node ws _ _ _) = ws
+        subanagram' (x:xs) t'              = let (Node ws c t0 t1) = t'
+          in Set.union ws (if x < c then subanagram' xs t' else
+                           if x > c then subanagram' (x:xs) t0
+                           else Set.union (subanagram' xs t0) (subanagram' xs t1))
 
 -- | /O/(1) Is this the empty set?
 null :: Tree s -> Bool

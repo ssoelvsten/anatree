@@ -20,8 +20,10 @@ tests_Empty = let t = Anatree.empty
   "notMember 'b'"   ~: True  ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
   "anagram 'ab'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList []) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
   "anagram 'ba'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList []) ~=? (Anatree.subanagram "ba" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -38,9 +40,11 @@ tests_Eta = let t = Anatree.insert "" $ Anatree.empty
   "member 'b'"      ~: False ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: True  ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList [])   ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList [""]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList [])   ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList [""]) ~=? (Anatree.subanagram "ba" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -58,9 +62,11 @@ tests_A = let t = Anatree.insert "a" $ Anatree.empty
   "member 'b'"      ~: False ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: True  ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList [])    ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["a"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList [])    ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["a"]) ~=? (Anatree.subanagram "ba" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -77,9 +83,11 @@ tests_A_A = let t = Anatree.insert "a" $ Anatree.insert "a" $ Anatree.empty
   "member 'b'"      ~: False ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: True  ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList [])    ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["a"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList [])    ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["a"]) ~=? (Anatree.subanagram "ba" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -96,9 +104,11 @@ tests_A_Eta = let t = Anatree.insert "a" $ Anatree.insert "" $ Anatree.empty
   "member 'b'"      ~: False ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: True  ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList [])        ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["", "a"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList [])        ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["", "a"]) ~=? (Anatree.subanagram "ba" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -116,9 +126,11 @@ tests_B = let t = Anatree.insert "b" Anatree.empty
   "member 'b'"      ~: True  ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: False ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList [])    ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["b"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList [])    ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["b"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -136,9 +148,11 @@ tests_A_B = let t = Anatree.insert "a" $ Anatree.insert "b" $ Anatree.empty
   "member 'b'"      ~: True  ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: False ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList [])         ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["a", "b"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList [])         ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["a", "b"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -155,9 +169,11 @@ tests_B_A = let t = Anatree.insert "b" $ Anatree.insert "a" $ Anatree.empty
   "member 'b'"      ~: True  ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: False ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList [])         ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["a", "b"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList []) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList [])         ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["a", "b"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -175,8 +191,10 @@ tests_AB_BA = let t = Anatree.insert "ab" $ Anatree.insert "ba" $ Anatree.empty
   "notMember 'b'"   ~: True  ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: True  ~=? (Anatree.member "ab" t),
   "anagram 'ab'"    ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: True  ~=? (Anatree.member "ba" t),
   "anagram 'ba'"    ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -194,8 +212,10 @@ tests_BA_AB = let t = Anatree.insert "ba" $ Anatree.insert "ab" $ Anatree.empty
   "notMember 'b'"   ~: True  ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: True  ~=? (Anatree.member "ab" t),
   "anagram 'ab'"    ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: True  ~=? (Anatree.member "ba" t),
   "anagram 'ba'"    ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -213,9 +233,11 @@ tests_A_AB_A = let t = Anatree.insert "a" $ Anatree.insert "ab"
   "member 'b'"      ~: False ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: True  ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: True  ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList ["ab"]) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList ["ab"])      ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["a", "ab"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList ["ab"]) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList ["ab"])      ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["a", "ab"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -233,9 +255,11 @@ tests_AB_B = let t = Anatree.insert "ab" $ Anatree.insert "b" $ Anatree.empty
   "member 'b'"      ~: True  ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: False ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: True  ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList ["ab"]) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList ["ab"])      ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["b", "ab"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList ["ab"]) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList ["ab"])      ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["b", "ab"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -253,9 +277,11 @@ tests_B_AB_B = let t = Anatree.insert "b" $ Anatree.insert "ab"
   "member 'b'"      ~: True  ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: False ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: True  ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList ["ab"]) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList ["ab"])      ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["b", "ab"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: False ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList ["ab"]) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList ["ab"])      ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["b", "ab"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -273,9 +299,11 @@ tests_BA_AB_B = let t = Anatree.insert "ba" $ Anatree.insert "ab"
   "member 'b'"      ~: True  ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: False ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: True  ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList ["ab", "ba"])      ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["b", "ab", "ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: True  ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList ["ab", "ba"])      ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["b", "ab", "ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -294,9 +322,11 @@ tests_Eta_BA_A_AB_B = let t = Anatree.insert ""  $ Anatree.insert "ba"
   "member 'b'"      ~: True  ~=? (Anatree.member "b" t),
   "notMember 'b'"   ~: False ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: True  ~=? (Anatree.member "ab" t),
-  "anagram 'ab'"    ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ab'"    ~: (Set.fromList ["ab", "ba"])               ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["", "a", "b", "ab", "ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: True  ~=? (Anatree.member "ba" t),
-  "anagram 'ba'"    ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.anagram "ab" t),
+  "anagram 'ba'"    ~: (Set.fromList ["ab", "ba"])               ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["", "a", "b", "ab", "ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: False ~=? (Anatree.member "ac" t)
   ]
 
@@ -316,8 +346,10 @@ tests_BA_A_AC = let t = Anatree.insert "ba" $ Anatree.insert "a"
   "notMember 'b'"   ~: True  ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
   "anagram 'ab'"    ~: (Set.fromList ["ba"]) ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["a", "ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: True  ~=? (Anatree.member "ba" t),
   "anagram 'ba'"    ~: (Set.fromList ["ba"]) ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["a", "ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: True  ~=? (Anatree.member "ac" t)
   ]
 
@@ -336,8 +368,10 @@ tests_BA_AC = let t = Anatree.insert "ba"  $ Anatree.insert "ac" $ Anatree.empty
   "notMember 'b'"   ~: True  ~=? (Anatree.notMember "b" t),
   "member 'ab'"     ~: False ~=? (Anatree.member "ab" t),
   "anagram 'ab'"    ~: (Set.fromList ["ba"]) ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ab'" ~: (Set.fromList ["ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ba'"     ~: True  ~=? (Anatree.member "ba" t),
   "anagram 'ba'"    ~: (Set.fromList ["ba"]) ~=? (Anatree.anagram "ab" t),
+  "subanagram 'ba'" ~: (Set.fromList ["ba"]) ~=? (Anatree.subanagram "ab" t),
   "member 'ac'"     ~: True  ~=? (Anatree.member "ac" t)
   ]
 
