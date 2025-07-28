@@ -5,9 +5,9 @@ import Test.HUnit
 import qualified Data.Set as Set
 import qualified Anatree as Anatree
 
--- Tests with the empty tree [2]
-tests_Empty :: Test.HUnit.Test
-tests_Empty = let t = Anatree.fromList [] :: Anatree.Tree Char
+tests :: [Test.Framework.Test]
+tests = hUnitTestToTests $ TestList [
+  let t = Anatree.fromList [] :: Anatree.Tree Char
   in "[]" ~: Test.HUnit.TestList [
   "size"            ~: 0     ~=? (Anatree.size t),
   "null"            ~: True  ~=? (Anatree.null t),
@@ -34,10 +34,8 @@ tests_Empty = let t = Anatree.fromList [] :: Anatree.Tree Char
   "toAscList"       ~: [] ~=? (Anatree.toAscList t),
   "toDescList"      ~: [] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList []) ~=? (Anatree.toSet t)
-  ]
-
-tests_Eta :: Test.HUnit.Test
-tests_Eta = let t = Anatree.fromList [""]
+  ],
+  let t = Anatree.fromList [""]
   in "['']" ~: Test.HUnit.TestList [
   "size"            ~: 1     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -64,11 +62,9 @@ tests_Eta = let t = Anatree.fromList [""]
   "toAscList"       ~: [""] ~=? (Anatree.toAscList t),
   "toDescList"      ~: [""] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList [""]) ~=? (Anatree.toSet t)
-  ]
-
--- Tests with a single 'a' node [2]
-tests_A :: Test.HUnit.Test
-tests_A = let t = Anatree.fromList ["a"]
+  ],
+  -- Tests with a single 'a' node [2]
+  let t = Anatree.fromList ["a"]
   in "['a']" ~: Test.HUnit.TestList [
   "size"            ~: 1     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -95,10 +91,8 @@ tests_A = let t = Anatree.fromList ["a"]
   "toAscList"       ~: ["a"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["a"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["a"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_A_A :: Test.HUnit.Test
-tests_A_A = let t = Anatree.fromList ["a", "a"]
+  ],
+  let t = Anatree.fromList ["a", "a"]
   in "['a','a']" ~: Test.HUnit.TestList [
   "size"            ~: 1     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -125,10 +119,8 @@ tests_A_A = let t = Anatree.fromList ["a", "a"]
   "toAscList"       ~: ["a"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["a"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["a"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_Eta_A :: Test.HUnit.Test
-tests_Eta_A = let t = Anatree.fromList ["", "a"]
+  ],
+  let t = Anatree.fromList ["", "a"]
   in "['','a']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -155,11 +147,9 @@ tests_Eta_A = let t = Anatree.fromList ["", "a"]
   "toAscList"       ~: ["", "a"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["a", ""] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["", "a"]) ~=? (Anatree.toSet t)
-  ]
-
--- Tests with a single 'b' node [2]
-tests_B :: Test.HUnit.Test
-tests_B = let t = Anatree.fromList ["b"]
+  ],
+  -- Tests with a single 'b' node [2]
+  let t = Anatree.fromList ["b"]
   in "['b']" ~: Test.HUnit.TestList [
   "size"            ~: 1     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -186,11 +176,9 @@ tests_B = let t = Anatree.fromList ["b"]
   "toAscList"       ~: ["b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["b"]) ~=? (Anatree.toSet t)
-  ]
-
--- Tests with an 'a,b' chain [2]
-tests_A_B :: Test.HUnit.Test
-tests_A_B = let t = Anatree.fromList ["a", "b"]
+  ],
+  -- Tests with an 'a,b' chain [2]
+  let t = Anatree.fromList ["a", "b"]
   in "['a','b']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -217,10 +205,8 @@ tests_A_B = let t = Anatree.fromList ["a", "b"]
   "toAscList"       ~: ["a", "b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b", "a"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["a", "b"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_B_A :: Test.HUnit.Test
-tests_B_A = let t = Anatree.fromList ["b", "a"]
+  ],
+  let t = Anatree.fromList ["b", "a"]
   in "['b','a']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -247,10 +233,8 @@ tests_B_A = let t = Anatree.fromList ["b", "a"]
   "toAscList"       ~: ["a", "b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b", "a"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["a", "b"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_AB_BA :: Test.HUnit.Test
-tests_AB_BA = let t = Anatree.fromList ["ab", "ba"]
+  ],
+  let t = Anatree.fromList ["ab", "ba"]
   in "['ab','ba']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -277,10 +261,8 @@ tests_AB_BA = let t = Anatree.fromList ["ab", "ba"]
   "toAscList"       ~: ["ab", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "ab"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_BA_AB :: Test.HUnit.Test
-tests_BA_AB = let t = Anatree.fromList ["ba", "ab"]
+  ],
+  let t = Anatree.fromList ["ba", "ab"]
   in "['ba','ab']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -307,10 +289,8 @@ tests_BA_AB = let t = Anatree.fromList ["ba", "ab"]
   "toAscList"       ~: ["ab", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "ab"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_A_AB_A :: Test.HUnit.Test
-tests_A_AB_A = let t = Anatree.fromList ["a", "ab", "a"]
+  ],
+  let t = Anatree.fromList ["a", "ab", "a"]
   in "['a','ab','a']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -337,11 +317,9 @@ tests_A_AB_A = let t = Anatree.fromList ["a", "ab", "a"]
   "toAscList"       ~: ["a", "ab"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ab", "a"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["a", "ab"]) ~=? (Anatree.toSet t)
-  ]
-
--- Tests with one 'a' node and two 'b' nodes.
-tests_B_AB :: Test.HUnit.Test
-tests_B_AB = let t = Anatree.fromList ["b", "ab"]
+  ],
+  -- Tests with one 'a' node and two 'b' nodes.
+  let t = Anatree.fromList ["b", "ab"]
   in "['b','ab']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -368,10 +346,8 @@ tests_B_AB = let t = Anatree.fromList ["b", "ab"]
   "toAscList"       ~: ["ab", "b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b", "ab"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["ab", "b"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_B_BA :: Test.HUnit.Test
-tests_B_BA = let t = Anatree.fromList ["b", "ba"]
+  ],
+  let t = Anatree.fromList ["b", "ba"]
   in "['b','ba']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -398,10 +374,8 @@ tests_B_BA = let t = Anatree.fromList ["b", "ba"]
   "toAscList"       ~: ["b", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "b"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["ba", "b"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_B_AB_B :: Test.HUnit.Test
-tests_B_AB_B = let t = Anatree.fromList ["b", "ab", "b"]
+  ],
+  let t = Anatree.fromList ["b", "ab", "b"]
   in "['b','ab','b']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -428,10 +402,8 @@ tests_B_AB_B = let t = Anatree.fromList ["b", "ab", "b"]
   "toAscList"       ~: ["ab", "b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b", "ab"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["ab", "b"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_B_AB_BA :: Test.HUnit.Test
-tests_B_AB_BA = let t = Anatree.fromList ["b", "ab", "ba"]
+  ],
+  let t = Anatree.fromList ["b", "ab", "ba"]
   in "['b','ab','ba']" ~: Test.HUnit.TestList [
   "size"            ~: 3     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -458,10 +430,8 @@ tests_B_AB_BA = let t = Anatree.fromList ["b", "ab", "ba"]
   "toAscList"       ~: ["ab", "b", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "b", "ab"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["ab", "ba", "b"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_B_AB_A_BA_Eta :: Test.HUnit.Test
-tests_B_AB_A_BA_Eta = let t = Anatree.fromList ["b", "ab", "a", "ba", ""]
+  ],
+  let t = Anatree.fromList ["b", "ab", "a", "ba", ""]
   in "['b','ab','a','ba','']" ~: Test.HUnit.TestList [
   "size"            ~: 5     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -488,11 +458,9 @@ tests_B_AB_A_BA_Eta = let t = Anatree.fromList ["b", "ab", "a", "ba", ""]
   "toAscList"       ~: ["", "a", "ab", "b", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "b", "ab", "a", ""] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["", "a", "ab", "ba", "b"]) ~=? (Anatree.toSet t)
-  ]
-
--- An 'abc' chain.
-tests_AC_BA :: Test.HUnit.Test
-tests_AC_BA = let t = Anatree.fromList ["ac", "ba"]
+  ],
+  -- An 'abc' chain.
+  let t = Anatree.fromList ["ac", "ba"]
   in "['ac','ba']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -519,10 +487,8 @@ tests_AC_BA = let t = Anatree.fromList ["ac", "ba"]
   "toAscList"       ~: ["ac", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "ac"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["ba", "ac"]) ~=? (Anatree.toSet t)
-  ]
-
-tests_AC_A_BA :: Test.HUnit.Test
-tests_AC_A_BA = let t = Anatree.fromList ["ac", "a", "ba"]
+  ],
+  let t = Anatree.fromList ["ac", "a", "ba"]
   in "['ac','a','ba']" ~: Test.HUnit.TestList [
   "size"            ~: 3     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -549,11 +515,9 @@ tests_AC_A_BA = let t = Anatree.fromList ["ac", "a", "ba"]
   "toAscList"       ~: ["a", "ac", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "ac", "a"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["a", "ba", "ac"]) ~=? (Anatree.toSet t)
-  ]
-
--- Tree with a common 'a' node and then splitting into 'b' and 'c' subtrees
-tests_AC_B_A :: Test.HUnit.Test
-tests_AC_B_A = let t = Anatree.fromList ["ac", "b", "a"]
+  ],
+  -- Tree with a common 'a' node and then splitting into 'b' and 'c' subtrees
+  let t = Anatree.fromList ["ac", "b", "a"]
   in "['ac','b','a']" ~: Test.HUnit.TestList [
   "size"            ~: 3     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -581,18 +545,6 @@ tests_AC_B_A = let t = Anatree.fromList ["ac", "b", "a"]
   "toDescList"      ~: ["b", "ac", "a"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["a", "ac", "b"]) ~=? (Anatree.toSet t)
   ]
-
--- hUnitTestToTests: Adapt an existing HUnit test into a list of test-framework tests
-tests :: [Test.Framework.Test]
-tests = hUnitTestToTests $ TestList [
-  tests_Empty,
-  tests_Eta,
-  tests_A, tests_A_A, tests_Eta_A,
-  tests_B,
-  tests_A_B, tests_B_A, tests_BA_AB, tests_AB_BA, tests_A_AB_A,
-  tests_B_AB, tests_B_BA, tests_B_AB_B, tests_B_AB_BA, tests_B_AB_A_BA_Eta,
-  tests_AC_BA, tests_AC_A_BA, tests_AC_A_BA,
-  tests_AC_B_A
   ]
 
 main :: IO ()
