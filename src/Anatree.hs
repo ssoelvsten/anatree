@@ -33,6 +33,12 @@ data Tree s = Leaf (Set.Set [s])
 empty :: Tree s
 empty = Leaf (Set.empty)
 
+-- | Repeated use of `insert` into an `empty` anagram tree.
+fromList :: Ord s => [[s]] -> Tree s
+fromList ws = foldr insert empty ws
+
+-- * Insertion
+
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Add word to the set.
 insert :: Ord s => [s] -> Tree s -> Tree s
 insert w t = insert' (sort w) t
