@@ -74,6 +74,13 @@ subanagram w t = subanagram' (sort w) t
                            if x > c then subanagram' (x:xs) t0
                            else Set.union (subanagram' xs t0) (subanagram' xs t1))
 
+-- | /O/(/n²/) The words of a certain length that are not anagrams of each other.
+keys :: Ord s => Int -> Tree s -> Set.Set [s]
+keys 0 (Leaf ws)         = Set.take 1 ws
+keys 0 (Node ws _ t0 _ ) = Set.union (Set.take 1 ws) (keys 0 t0)
+keys _ (Leaf _)          = Set.empty
+keys k (Node _  _ t0 t1) = Set.union (keys k t0) (keys (k-1) t1)
+
 -- | /O/(1) Is this the empty set?
 null :: Tree s -> Bool
 null (Leaf ws) = Set.null ws
