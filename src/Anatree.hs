@@ -126,11 +126,13 @@ toList t = Anatree.foldr (:) [] t
 
 -- | Convert the set into an ascending list of elements.
 toAscList :: Ord s => Tree s -> [[s]]
-toAscList t = List.sort (toList t)
+toAscList (Leaf ws) = Set.toAscList ws
+toAscList t         = List.sort (toList t)
 
 -- | Convert the set into a descending list of elements.
 toDescList :: Ord s => Tree s -> [[s]]
-toDescList t = List.sortBy (Ord.comparing Ord.Down) (toList t)
+toDescList (Leaf ws) = Set.toDescList ws
+toDescList t         = List.sortBy (Ord.comparing Ord.Down) (toList t)
 
 -- ** Set
 toSet :: Ord s => Tree s -> Set.Set [s]
