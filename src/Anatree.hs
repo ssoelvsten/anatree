@@ -53,32 +53,32 @@ insert w t = insert' (sort w) t
 -- * Queries
 
 -- | /O/(/|w|/ log /|w|/ + |Σ|) The anagrams that exists in the set.
-anagram :: Ord s => [s] -> Tree s -> Set.Set [s]
-anagram w t = anagram' (sort w) t
-  where anagram' []     (Leaf ws)        = ws
-        anagram' []     (Node ws _ _ _)  = ws
-        anagram' _      (Leaf _)         = Set.empty
-        anagram' (x:xs) (Node _ c t0 t1) = if x < c then Set.empty else
-                                           if x > c then anagram' (x:xs) t0
-                                                    else anagram' xs     t1
+anagrams :: Ord s => [s] -> Tree s -> Set.Set [s]
+anagrams w t = anagrams' (sort w) t
+  where anagrams' []     (Leaf ws)        = ws
+        anagrams' []     (Node ws _ _ _)  = ws
+        anagrams' _      (Leaf _)         = Set.empty
+        anagrams' (x:xs) (Node _ c t0 t1) = if x < c then Set.empty else
+                                            if x > c then anagrams' (x:xs) t0
+                                                     else anagrams' xs     t1
 
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Is the word in the set?
 member :: Ord s => [s] -> Tree s -> Bool
-member w t = Set.member w (anagram w t)
+member w t = Set.member w (anagrams w t)
 
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Is the word not in the set?
 notMember :: Ord s => [s] -> Tree s -> Bool
 notMember w t = not (member w t)
 
 -- | /O/(/|w|/ log /|w|/ + m(|Σ| /|w|/)) The subanagrams that exists in the set.
-subanagram :: Ord s => [s] -> Tree s -> Set.Set [s]
-subanagram w t = subanagram' (sort w) t
-  where subanagram' _      (Leaf ws)       = ws
-        subanagram' []     (Node ws _ _ _) = ws
-        subanagram' (x:xs) t'              = let (Node ws c t0 t1) = t'
-          in Set.union ws (if x < c then subanagram' xs t' else
-                           if x > c then subanagram' (x:xs) t0
-                           else Set.union (subanagram' xs t0) (subanagram' xs t1))
+subanagrams :: Ord s => [s] -> Tree s -> Set.Set [s]
+subanagrams w t = subanagrams' (sort w) t
+  where subanagrams' _      (Leaf ws)       = ws
+        subanagrams' []     (Node ws _ _ _) = ws
+        subanagrams' (x:xs) t'              = let (Node ws c t0 t1) = t'
+          in Set.union ws (if x < c then subanagrams' xs t' else
+                           if x > c then subanagrams' (x:xs) t0
+                           else Set.union (subanagrams' xs t0) (subanagrams' xs t1))
 
 -- | /O/(/n²/) The words of a certain length that are not anagrams of each other.
 keys :: Ord s => Int -> Tree s -> Set.Set [s]
