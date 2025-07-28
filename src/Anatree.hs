@@ -46,16 +46,19 @@ insert w t = insert' (sort w) t
 
 -- * Queries
 
+-- | /O/(/|w|/ log /|w|/ + |Σ|) The anagrams that exists in the set.
+anagram :: Ord s => [s] -> Tree s -> Set.Set [s]
+anagram w t = anagram' (sort w) t
+  where anagram' []     (Leaf ws)        = ws
+        anagram' []     (Node ws _ _ _)  = ws
+        anagram' _      (Leaf _)         = Set.empty
+        anagram' (x:xs) (Node _ c t0 t1) = if x < c then Set.empty else
+                                           if x > c then anagram' (x:xs) t0
+                                                    else anagram' xs     t1
+
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Is the word in the set?
 member :: Ord s => [s] -> Tree s -> Bool
-member w t = member' (sort w) t
-  where member' []     (Leaf ws)         = Set.member w ws
-        member' []     (Node ws _  _ _)  = Set.member w ws
-        member' _      (Leaf _)          = False
-        member' (x:xs) t'                = let (Node _ c t0 t1) = t'
-          in if x < c then member' xs     t' else
-             if x > c then member' (x:xs) t0
-                      else member' xs     t1
+member w t = Set.member w (anagram w t)
 
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Is the word not in the set?
 notMember :: Ord s => [s] -> Tree s -> Bool
