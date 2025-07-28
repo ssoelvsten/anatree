@@ -46,10 +46,10 @@ insert w t = insert' (List.sort w) t
   where insert' []     (Leaf ws)         = Leaf (Set.insert w ws)
         insert' []     (Node ws c t0 t1) = Node (Set.insert w ws) c t0 t1
         insert' (x:xs) (Leaf ws)         = Node ws x empty (insert' xs empty)
-        insert' (x:xs) (Node ws c t0 t1) =
-          if x < c then Node ws x (Node Set.empty c t0 t1) (insert' xs empty) else
-          if x > c then Node ws c (insert' (x:xs) t0)      t1
-                   else Node ws c t0                       (insert' xs t1)
+        insert' (x:xs) (Node ws c t0 t1)
+          | x < c     = Node ws x (Node Set.empty c t0 t1) (insert' xs empty)
+          | x > c     = Node ws c (insert' (x:xs) t0)      t1
+          | otherwise = Node ws c t0                       (insert' xs t1)
 
 -- * Queries
 
@@ -59,9 +59,10 @@ anagrams w t = anagrams' (List.sort w) t
   where anagrams' []     (Leaf ws)        = ws
         anagrams' []     (Node ws _ _ _)  = ws
         anagrams' _      (Leaf _)         = Set.empty
-        anagrams' (x:xs) (Node _ c t0 t1) = if x < c then Set.empty else
-                                            if x > c then anagrams' (x:xs) t0
-                                                     else anagrams' xs     t1
+        anagrams' (x:xs) (Node _ c t0 t1)
+          | x < c     = Set.empty
+          | x > c     = anagrams' (x:xs) t0
+          | otherwise = anagrams' xs     t1
 
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Is the word in the set?
 member :: Ord s => [s] -> Tree s -> Bool
