@@ -16,10 +16,12 @@
 --   Each set of anagrams are stored in a bucket via a `Data.Set`. Hence, no
 --   more than @maxBound::Int@ anagram "collisions" can be stored at once.
 module Anatree where
-import qualified Data.Set as Set
-import qualified Data.List as List
-import qualified Data.Ord as Ord
-import qualified Anatree.Util as Util
+import qualified Data.Foldable as Foldable
+import qualified Data.List     as List
+import qualified Data.Monoid   as Monoid
+import qualified Data.Ord      as Ord
+import qualified Data.Set      as Set
+import qualified Anatree.Util  as Util
 
 -- * Tree Type
 
@@ -125,6 +127,12 @@ foldl f x (Leaf ws)         = Set.foldl f x ws
 foldl f x (Node ws _ t0 t1) = let x'  = Set.foldl f x ws
                                   x'' = Anatree.foldl f x' t0
                               in Anatree.foldl f x'' t1
+
+-- | Fold mapped words in the set.
+foldMap :: Monoid.Monoid m => ([s] -> m) -> Tree s -> m
+foldMap f (Leaf ws)         = Foldable.foldMap f ws
+foldMap f (Node ws _ t0 t1) =
+ (Foldable.foldMap f ws) `mappend` (Anatree.foldMap f t0) `mappend` (Anatree.foldMap f t1)
 
 -- * Conversion
 -- ** List
