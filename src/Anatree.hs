@@ -39,6 +39,10 @@ empty = Leaf (Set.empty)
 fromList :: Ord s => [[s]] -> Tree s
 fromList ws = Prelude.foldr insert empty ws
 
+-- | Repeated use of `insert` into an `empty` anagram tree.
+fromSet :: Ord s => Set.Set [s] -> Tree s
+fromSet ws = Set.foldr insert empty ws
+
 -- * Insertion
 
 -- | /O/(/|w|/ log /|w|/ + |Σ|) Add word to the set.

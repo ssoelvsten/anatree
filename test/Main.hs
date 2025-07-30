@@ -35,7 +35,7 @@ tests = hUnitTestToTests $ TestList [
   "toDescList"      ~: [] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList []) ~=? (Anatree.toSet t)
   ],
-  let t = Anatree.fromList [""]
+  let t = Anatree.fromSet (Set.fromList [""])
   in "['']" ~: Test.HUnit.TestList [
   "size"            ~: 1     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -120,7 +120,7 @@ tests = hUnitTestToTests $ TestList [
   "toDescList"      ~: ["a"] ~=? (Anatree.toDescList t),
   "toSet"           ~: (Set.fromList ["a"]) ~=? (Anatree.toSet t)
   ],
-  let t = Anatree.fromList ["", "a"]
+  let t = Anatree.fromSet (Set.fromAscList ["", "a"])
   in "['','a']" ~: Test.HUnit.TestList [
   "size"            ~: 2     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -149,7 +149,7 @@ tests = hUnitTestToTests $ TestList [
   "toSet"           ~: (Set.fromList ["", "a"]) ~=? (Anatree.toSet t)
   ],
   -- Tests with a single 'b' node [2]
-  let t = Anatree.fromList ["b"]
+  let t = Anatree.fromSet (Set.fromAscList ["b"])
   in "['b']" ~: Test.HUnit.TestList [
   "size"            ~: 1     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
