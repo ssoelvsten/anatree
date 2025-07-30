@@ -23,6 +23,14 @@ e.g. finding within a dictionary all (sub)anagrams of a given word.
   This only includes the *anatree.h* file and its CMake for inclusion in your
   project as a submodule.
 
+### Haskell
+
+[![hs/test](https://github.com/ssoelvsten/anatree/actions/workflows/hs_test.yml/badge.svg)](https://github.com/ssoelvsten/anatree/actions/workflows/hs_test.yml)
+
+- [`hs/main`](https://github.com/ssoelvsten/anatree/tree/hs/main)
+
+  Development branch for the Haskell implementation, including tests and more.
+
 ## License
 
 The software and documentation files in this repository are provided under the
