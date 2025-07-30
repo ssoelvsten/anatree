@@ -1,20 +1,29 @@
--- | The `Tree` type represents a dictionary of words, [/s/], over symbols from
---   some alphabet, Σ. Most operations require that /s/ be an instance of the
---   `Data.Ord` class.
+-- |
+-- Module      :  Anatree
+-- Copyright   :  (c) 2025 Steffan Sølvsten
+-- License     :  LGPL v3
 --
---   The tree is designed specifically to make it easy to query for
---   (sub)anagrams, i.e. words /w/ and /w'/ where /sort w/ and /sort w'/ are
---   equivalent. The time to do most of these operations are mainly dependent on
---   the size of the tree (/t/) the alphabet (|Σ|) the output (/m/), and not the
---   number of words stored (/n/).
+-- Maintainer  :  soelvsten@cs.au.dk
+-- Stability   :  experimental
+-- Portability :  portable
 --
---   This module is intended to be imported qualified. That is, please import it
---   as follows:
+-- The `Tree` type represents a dictionary of words, [/s/], over symbols from
+-- some alphabet, Σ. Most operations require that /s/ be an instance of the
+-- `Data.Ord` class.
 --
---   @import qualified Anatree as Anatree@
+-- The tree is designed specifically to make it easy to query for
+-- (sub)anagrams, i.e. words /w/ and /w'/ where /sort w/ and /sort w'/ are
+-- equivalent. The time to do most of these operations are mainly dependent on
+-- the size of the tree (/t/) the alphabet (|Σ|) the output (/m/), and not the
+-- number of words stored (/n/).
 --
---   Each set of anagrams are stored in a bucket via a `Data.Set`. Hence, no
---   more than @maxBound::Int@ anagram "collisions" can be stored at once.
+-- This module is intended to be imported qualified. That is, please import it
+-- as follows:
+--
+-- @import qualified Anatree as Anatree@
+--
+-- Each set of anagrams are stored in a bucket via a `Data.Set`. Hence, no
+-- more than @maxBound::Int@ anagram "collisions" can be stored at once.
 module Anatree where
 import qualified Data.Foldable as Foldable
 import qualified Data.List     as List
