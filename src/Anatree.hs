@@ -81,12 +81,12 @@ notMember w t = not (member w t)
 -- | /O/(/|w|/ log /|w|/ + m(|Σ| /|w|/)) The subanagrams that exists in the set.
 subanagrams :: Ord s => [s] -> Tree s -> Set.Set [s]
 subanagrams w t = subanagrams' (List.sort w) t
-  where subanagrams' _      (Leaf ws)       = ws
-        subanagrams' []     (Node ws _ _ _) = ws
-        subanagrams' (x:xs) t'              = let (Node ws c t0 t1) = t'
-          in if x < c then subanagrams' xs t' else
-             if x > c then Set.union ws (subanagrams' (x:xs) t0)
-             else Set.union ws $ Set.union (subanagrams' xs t0) (subanagrams' xs t1)
+  where subanagrams' _         (Leaf ws)         = ws
+        subanagrams' []        (Node ws _ _  _)  = ws
+        subanagrams' (x:xs) t'@(Node ws c t0 t1)
+          | x < c     = subanagrams' xs t'
+          | x > c     = Set.union ws (subanagrams' (x:xs) t0)
+          | otherwise = Set.union ws $ Set.union (subanagrams' xs t0) (subanagrams' xs t1)
 
 -- | /O/(/n²/) The words of a certain length that are not anagrams of each other.
 keys :: Ord s => Int -> Tree s -> Set.Set [s]
