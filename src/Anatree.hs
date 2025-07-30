@@ -160,5 +160,7 @@ toDescList (Node ws _ t0 t1) = merge (Set.toDescList ws)
   where merge = Util.mergeBy (Ord.comparing Ord.Down)
 
 -- ** Set
+
+-- | Convert the set of words to a `Set`.
 toSet :: Ord s => Tree s -> Set.Set [s]
 toSet t = Anatree.foldr Set.insert Set.empty t
