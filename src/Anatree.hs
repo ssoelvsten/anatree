@@ -5,16 +5,16 @@
 --   The tree is designed specifically to make it easy to query for
 --   (sub)anagrams, i.e. words /w/ and /w'/ where /sort w/ and /sort w'/ are
 --   equivalent. The time to do most of these operations are mainly dependent on
---   the size of the tree, /t/, the alphabet, |Σ|, the output, /m/, and not the
---   number of words stored, /n/.
+--   the size of the tree (/t/) the alphabet (|Σ|) the output (/m/), and not the
+--   number of words stored (/n/).
 --
 --   This module is intended to be imported qualified. That is, please import it
 --   as follows:
 --
 --   @import qualified Anatree as Anatree@
 --
---   Each set of anagrams are stored using `Data.Set`, meaning that no more than
---   @maxBound::Int@ many anagrams may be stored at once.
+--   Each set of anagrams are stored in a bucket via a `Data.Set`. Hence, no
+--   more than @maxBound::Int@ anagram "collisions" can be stored at once.
 module Anatree where
 import qualified Data.Set as Set
 import qualified Data.Ord as Ord
@@ -22,9 +22,10 @@ import qualified Data.List as List
 
 -- * Tree Type
 
--- | Each node in the tree contains a `Data.Set` `Char` with the words that are
---   each others' anagrams. Each `Node` contains a binary choice of whether a
---   certain character is at a certain position in the normalized (sorted) word.
+-- | Each node in the tree contains a `Data.Set` /s/ (/s is most often `Char`)
+--   with the words that are each others' anagrams. Each `Node` contains a
+--   binary choice of whether a certain character exists in the normalized
+--   (sorted) word.
 data Tree s = Leaf (Set.Set [s])
             | Node (Set.Set [s]) s (Tree s) (Tree s)
 
