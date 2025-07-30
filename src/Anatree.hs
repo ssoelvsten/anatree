@@ -57,7 +57,7 @@ fromSet ws = Set.foldr insert empty ws
 
 -- * Insertion
 
--- | /O/(/|w|/ log /|w|/ + |Σ|) Add word to the set.
+-- | /O/(|/w/| log |/w/| + |Σ|) Add word to the set.
 insert :: Ord s => [s] -> Tree s -> Tree s
 insert w t = insert' (List.sort w) t
   where insert' []     (Leaf ws)         = Leaf (Set.insert w ws)
@@ -70,7 +70,7 @@ insert w t = insert' (List.sort w) t
 
 -- * Queries
 
--- | /O/(/|w|/ log /|w|/ + |Σ|) The anagrams that exists in the set.
+-- | /O/(|/w/| log |/w/| + |Σ|) The anagrams that exists in the set.
 anagrams :: Ord s => [s] -> Tree s -> Set.Set [s]
 anagrams w t = anagrams' (List.sort w) t
   where anagrams' []     (Leaf ws)        = ws
@@ -81,15 +81,15 @@ anagrams w t = anagrams' (List.sort w) t
           | x > c     = anagrams' (x:xs) t0
           | otherwise = anagrams' xs     t1
 
--- | /O/(/|w|/ log /|w|/ + |Σ|) Is the word in the set?
+-- | /O/(|/w/| log |/w/| + |Σ|) Is the word in the set?
 member :: Ord s => [s] -> Tree s -> Bool
 member w t = Set.member w (anagrams w t)
 
--- | /O/(/|w|/ log /|w|/ + |Σ|) Is the word not in the set?
+-- | /O/(|/w/| log |/w/| + |Σ|) Is the word not in the set?
 notMember :: Ord s => [s] -> Tree s -> Bool
 notMember w t = not (member w t)
 
--- | /O/(/|w|/ log /|w|/ + m(|Σ| /|w|/)) The subanagrams that exists in the set.
+-- | /O/(|/w/| log |/w/| + m(|Σ| |/w/|)) The subanagrams that exists in the set.
 subanagrams :: Ord s => [s] -> Tree s -> Set.Set [s]
 subanagrams w t = subanagrams' (List.sort w) t
   where subanagrams' _         (Leaf ws)         = ws
