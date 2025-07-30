@@ -17,7 +17,6 @@
 --   more than @maxBound::Int@ anagram "collisions" can be stored at once.
 module Anatree where
 import qualified Data.Set as Set
-import qualified Data.Ord as Ord
 import qualified Data.List as List
 
 -- * Tree Type
@@ -131,13 +130,26 @@ toList t = Anatree.foldr (:) [] t
 
 -- | Convert the set into an ascending list of elements.
 toAscList :: Ord s => Tree s -> [[s]]
-toAscList (Leaf ws) = Set.toAscList ws
-toAscList t         = List.sort (toList t)
+toAscList (Leaf ws)         = Set.toAscList ws
+toAscList (Node ws _ t0 t1) = merge (Set.toAscList ws)
+                            $ merge (toAscList t0) (toAscList t1)
+  where merge []     ys = ys
+        merge xs     [] = xs
+        merge (x:xs) (y:ys)
+          | x < y     = x:(merge (xs)   (y:ys))
+          | otherwise = y:(merge (x:xs) (ys))
 
 -- | Convert the set into a descending list of elements.
 toDescList :: Ord s => Tree s -> [[s]]
 toDescList (Leaf ws) = Set.toDescList ws
-toDescList t         = List.sortBy (Ord.comparing Ord.Down) (toList t)
+toDescList (Node ws _ t0 t1) = merge (Set.toDescList ws)
+                             $ merge (toDescList t0) (toDescList t1)
+  where merge []     ys = ys
+        merge xs     [] = xs
+        merge (x:xs) (y:ys)
+          | x > y     = x:(merge (xs)   (y:ys))
+          | otherwise = y:(merge (x:xs) (ys))
+
 
 -- ** Set
 toSet :: Ord s => Tree s -> Set.Set [s]
