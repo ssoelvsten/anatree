@@ -18,6 +18,8 @@
 module Anatree where
 import qualified Data.Set as Set
 import qualified Data.List as List
+import qualified Data.Ord as Ord
+import qualified Anatree.Util as Util
 
 -- * Tree Type
 
@@ -122,7 +124,7 @@ foldr f x (Node ws _ t0 t1) = let x'  = Anatree.foldr f x  t1
 
 -- | An alias of `toList`.
 elems :: Tree s -> [[s]]
-elems t = toList t
+elems = toList
 
 -- | Convert the set to a list of elements.
 toList :: Tree s -> [[s]]
@@ -133,23 +135,14 @@ toAscList :: Ord s => Tree s -> [[s]]
 toAscList (Leaf ws)         = Set.toAscList ws
 toAscList (Node ws _ t0 t1) = merge (Set.toAscList ws)
                             $ merge (toAscList t0) (toAscList t1)
-  where merge []     ys = ys
-        merge xs     [] = xs
-        merge (x:xs) (y:ys)
-          | x < y     = x:(merge (xs)   (y:ys))
-          | otherwise = y:(merge (x:xs) (ys))
+  where merge = Util.mergeBy (Ord.compare)
 
 -- | Convert the set into a descending list of elements.
 toDescList :: Ord s => Tree s -> [[s]]
 toDescList (Leaf ws) = Set.toDescList ws
 toDescList (Node ws _ t0 t1) = merge (Set.toDescList ws)
                              $ merge (toDescList t0) (toDescList t1)
-  where merge []     ys = ys
-        merge xs     [] = xs
-        merge (x:xs) (y:ys)
-          | x > y     = x:(merge (xs)   (y:ys))
-          | otherwise = y:(merge (x:xs) (ys))
-
+  where merge = Util.mergeBy (Ord.comparing Ord.Down)
 
 -- ** Set
 toSet :: Ord s => Tree s -> Set.Set [s]
