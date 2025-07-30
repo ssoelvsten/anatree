@@ -33,7 +33,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: [] ~=? (Anatree.toList t),
   "toAscList"       ~: [] ~=? (Anatree.toAscList t),
   "toDescList"      ~: [] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList []) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList []) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromSet (Set.fromList [""])
   in "['']" ~: Test.HUnit.TestList [
@@ -61,7 +63,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: [""] ~=? (Anatree.toList t),
   "toAscList"       ~: [""] ~=? (Anatree.toAscList t),
   "toDescList"      ~: [""] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList [""]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList [""]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   -- Tests with a single 'a' node [2]
   let t = Anatree.fromList ["a"]
@@ -90,7 +94,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["a"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["a"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["a"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["a"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["a"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromList ["a", "a"]
   in "['a','a']" ~: Test.HUnit.TestList [
@@ -118,7 +124,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["a"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["a"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["a"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["a"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["a"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromSet (Set.fromAscList ["", "a"])
   in "['','a']" ~: Test.HUnit.TestList [
@@ -146,7 +154,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["", "a"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["", "a"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["a", ""] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["", "a"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["", "a"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   -- Tests with a single 'b' node [2]
   let t = Anatree.fromSet (Set.fromAscList ["b"])
@@ -175,7 +185,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["b"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["b"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["b"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   -- Tests with an 'a,b' chain [2]
   let t = Anatree.fromList ["a", "b"]
@@ -204,7 +216,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["b", "a"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["a", "b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b", "a"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["a", "b"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["a", "b"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromList ["b", "a"]
   in "['b','a']" ~: Test.HUnit.TestList [
@@ -232,7 +246,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["b", "a"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["a", "b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b", "a"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["a", "b"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["a", "b"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromList ["ab", "ba"]
   in "['ab','ba']" ~: Test.HUnit.TestList [
@@ -260,7 +276,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["ab", "ba"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["ab", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "ab"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromList ["ba", "ab"]
   in "['ba','ab']" ~: Test.HUnit.TestList [
@@ -288,7 +306,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["ab", "ba"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["ab", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "ab"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["ab", "ba"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromList ["a", "ab", "a"]
   in "['a','ab','a']" ~: Test.HUnit.TestList [
@@ -316,7 +336,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["a", "ab"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["a", "ab"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ab", "a"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["a", "ab"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["a", "ab"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   -- Tests with one 'a' node and two 'b' nodes.
   let t = Anatree.fromList ["b", "ab"]
@@ -345,7 +367,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["b", "ab"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["ab", "b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b", "ab"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["ab", "b"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["ab", "b"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromList ["b", "ba"]
   in "['b','ba']" ~: Test.HUnit.TestList [
@@ -373,7 +397,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["b", "ba"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["b", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "b"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["ba", "b"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["ba", "b"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromList ["b", "ab", "b"]
   in "['b','ab','b']" ~: Test.HUnit.TestList [
@@ -401,7 +427,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["b", "ab"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["ab", "b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b", "ab"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["ab", "b"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["ab", "b"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromList ["b", "ab", "ba"]
   in "['b','ab','ba']" ~: Test.HUnit.TestList [
@@ -429,7 +457,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["b", "ab", "ba"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["ab", "b", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "b", "ab"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["ab", "ba", "b"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["ab", "ba", "b"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromList ["b", "ab", "a", "ba", ""]
   in "['b','ab','a','ba','']" ~: Test.HUnit.TestList [
@@ -457,7 +487,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["", "b", "a", "ab", "ba"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["", "a", "ab", "b", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "b", "ab", "a", ""] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["", "a", "ab", "ba", "b"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["", "a", "ab", "ba", "b"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   -- An 'abc' chain.
   let t = Anatree.fromList ["ac", "ba"]
@@ -486,7 +518,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["ac", "ba"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["ac", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "ac"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["ba", "ac"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["ba", "ac"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   let t = Anatree.fromList ["ac", "a", "ba"]
   in "['ac','a','ba']" ~: Test.HUnit.TestList [
@@ -514,7 +548,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["a", "ac", "ba"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["a", "ac", "ba"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["ba", "ac", "a"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["a", "ba", "ac"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["a", "ba", "ac"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ],
   -- Tree with a common 'a' node and then splitting into 'b' and 'c' subtrees
   let t = Anatree.fromList ["ac", "b", "a"]
@@ -543,7 +579,9 @@ tests = hUnitTestToTests $ TestList [
   "toList"          ~: ["b", "a", "ac"] ~=? (Anatree.toList t),
   "toAscList"       ~: ["a", "ac", "b"] ~=? (Anatree.toAscList t),
   "toDescList"      ~: ["b", "ac", "a"] ~=? (Anatree.toDescList t),
-  "toSet"           ~: (Set.fromList ["a", "ac", "b"]) ~=? (Anatree.toSet t)
+  "toSet"           ~: (Set.fromList ["a", "ac", "b"]) ~=? (Anatree.toSet t),
+  "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
+  "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t)
   ]
   ]
 

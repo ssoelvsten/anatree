@@ -119,6 +119,13 @@ foldr f x (Node ws _ t0 t1) = let x'  = Anatree.foldr f x  t1
                                   x'' = Anatree.foldr f x' t0
                               in Set.foldr f x'' ws
 
+-- | Fold the words in the set using a left-associative binary operator.
+foldl :: (t -> [s] -> t) -> t -> Tree s -> t
+foldl f x (Leaf ws)         = Set.foldl f x ws
+foldl f x (Node ws _ t0 t1) = let x'  = Set.foldl f x ws
+                                  x'' = Anatree.foldl f x' t0
+                              in Anatree.foldl f x'' t1
+
 -- * Conversion
 -- ** List
 
