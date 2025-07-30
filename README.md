@@ -9,7 +9,6 @@ e.g. finding within a dictionary all (sub)anagrams of a given word.
 ## Implementations
 
 ### C++
-
 [![cpp/test](https://github.com/SSoelvsten/anatree/actions/workflows/cpp_test.yml/badge.svg)](https://github.com/SSoelvsten/anatree/actions/workflows/cpp__test.yml)
 &nbsp;
 [![codecov](https://codecov.io/gh/SSoelvsten/anatree/branch/main/graph/badge.svg?token=j4JA35K7Ec)](https://codecov.io/gh/SSoelvsten/anatree)
@@ -20,8 +19,12 @@ e.g. finding within a dictionary all (sub)anagrams of a given word.
 
 - [`cpp/header-only`](https://github.com/ssoelvsten/anatree/tree/cpp/header-only)
 
-  This only includes the *anatree.h* file and its CMake for inclusion in your
-  project as a submodule.
+  The *anatree.h* file and its CMake only for easy inclusion in your project.
+
+**Authors:** Steffan Sølvsten ([@ssoelvsten](github.com/ssoelvsten/)) and
+Andreas H. H. Hansen ([@APersonH](https://github.com/APersonH))
+
+- - -
 
 ### Haskell
 
@@ -30,6 +33,8 @@ e.g. finding within a dictionary all (sub)anagrams of a given word.
 - [`hs/main`](https://github.com/ssoelvsten/anatree/tree/hs/main)
 
   Development branch for the Haskell implementation, including tests and more.
+
+**Authors:** Steffan Sølvsten ([@ssoelvsten](github.com/ssoelvsten/))
 
 ## License
 
