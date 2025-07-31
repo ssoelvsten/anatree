@@ -11,39 +11,39 @@ cabal-version:      3.4
 --   http://haskell.org/cabal/users-guide/
 --
 -- The name of the package.
-name:               Anatree
+name:                   Anatree
 
 -- The package version.
 -- See the Haskell package versioning policy (PVP) for standards
 -- guiding when and how versions should be incremented.
 -- https://pvp.haskell.org
--- PVP summary:     +-+------- breaking API changes
---                  | | +----- non-breaking API additions
---                  | | | +--- code changes with no API change
-version:            0.1.0.0
+-- PVP summary:         +-+------- breaking API changes
+--                      | | +----- non-breaking API additions
+--                      | | | +--- code changes with no API change
+version:                0.1.0.0
 
 -- A short (one-line) description of the package.
-synopsis:           Anatree: A Fast Data Structure for Anagrams
+synopsis:               Anatree: A Fast Data Structure for Anagrams
 
 -- A longer description of the package.
 -- description:
 
 -- The license under which the package is released.
-license:            LGPL-3.0-only
+license:                LGPL-3.0-only
 
 -- The package author(s).
-author:             Steffan Sølvsten
+author:                 Steffan Sølvsten
 
 -- An email address to which users can send suggestions, bug reports, and patches.
-maintainer:         soelvsten@cs.au.dk
+maintainer:             soelvsten@cs.au.dk
 
 -- A copyright notice.
 -- copyright:
-category:           Data
-build-type:         Simple
+category:               Data
+build-type:             Simple
 
 -- Extra doc files to be distributed with the package, such as a CHANGELOG or a README.
-extra-doc-files:    CHANGELOG.md
+extra-doc-files:        CHANGELOG.md
 
 -- Extra source files to be distributed with the package, such as examples, or a tutorial module.
 -- extra-source-files:
@@ -53,13 +53,13 @@ common warnings
 
 library
     -- Import common warning flags.
-    import:           warnings
+    import:             warnings
 
     -- Modules exported by the library.
-    exposed-modules:  Anatree
+    exposed-modules:    Anatree
 
     -- Modules included in this library but not exported.
-    other-modules: Anatree.Util
+    other-modules:      Anatree.Util
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -70,20 +70,20 @@ library
         containers
 
     -- Directories containing source files.
-    hs-source-dirs:   src
+    hs-source-dirs:     src
 
     -- Base language which the package is written in.
-    default-language: GHC2021
+    default-language:   GHC2021
 
     -- Preprocessor
     default-extensions: CPP
 
 test-suite Anatree-test
     -- Import common warning flags.
-    import:           warnings
+    import:             warnings
 
     -- Base language which the package is written in.
-    default-language: GHC2021
+    default-language:   GHC2021
 
     -- Modules included in this executable, other than Main.
     -- other-modules:
@@ -92,13 +92,13 @@ test-suite Anatree-test
     -- other-extensions:
 
     -- The interface type and version of the test suite.
-    type:             exitcode-stdio-1.0
+    type:               exitcode-stdio-1.0
 
     -- Directories containing source files.
-    hs-source-dirs:   test
+    hs-source-dirs:     test
 
     -- The entrypoint to the test suite.
-    main-is:          Main.hs
+    main-is:            Main.hs
 
     -- Test dependencies.
     build-depends:
