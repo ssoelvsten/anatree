@@ -49,6 +49,8 @@ import qualified GHC.Exts      as GHCExts
 data Tree s = Leaf (Set.Set [s])
             | Node (Set.Set [s]) s (Tree s) (Tree s)
 
+type Size   = Int
+
 -- Equality checking by tree traversal and comparing the anagrams stored in
 -- each node.
 instance Eq s => Eq (Tree s) where
