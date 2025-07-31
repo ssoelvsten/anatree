@@ -601,6 +601,29 @@ tests = hUnitTestToTests $ TestList [
   "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
   "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t),
   "foldMap"         ~: ["b", "b", "a", "a", "ac", "ac"] ~=? (Anatree.foldMap (replicate 2) t)
+  ],
+  -- Equality Checking
+  "Eq (==) (/=)" ~: Test.HUnit.TestList [
+      -- Matches
+      "[''] == ['']"             ~: True ~=? (Anatree.singleton ""         == Anatree.singleton ""),
+      "['a'] == ['a']"           ~: True ~=? (Anatree.singleton "a"        == Anatree.singleton "a"),
+      "['a', 'b'] == ['b', 'a']" ~: True ~=? (Anatree.fromList ["a", "b"]  == Anatree.fromList ["b", "a"]),
+      -- Mismatches: Leaf vs. Node
+      "[] /= ['']"               ~: True ~=? (Anatree.singleton ""         /= Anatree.empty),
+      "[] /= ['']"               ~: True ~=? (Anatree.empty                /= Anatree.singleton ""),
+      "['']  /= ['a']"           ~: True ~=? (Anatree.singleton ""         /= Anatree.singleton "a"),
+      "['a'] /= ['']"            ~: True ~=? (Anatree.singleton "a"        /= Anatree.singleton ""),
+      -- Mismatches Node ws _ _  _
+      "['', 'a'] /= ['a']"       ~: True ~=? (Anatree.fromList ["", "a"]   /= Anatree.singleton "a"),
+      "['b'] /= ['b', '']"       ~: True ~=? (Anatree.fromList ["b"]       /= Anatree.fromList ["b", ""]),
+      -- Mismatches: Node _ c _  _
+      "['b'] /= ['a']"           ~: True ~=? (Anatree.singleton "b"        /= Anatree.singleton "a"),
+      -- Mismatches: Node _ _ t0 _
+      "['a', 'b'] /= ['a']"      ~: True ~=? (Anatree.fromList ["a", "b"]  /= Anatree.singleton "a"),
+      "['a'] /= ['a', 'b']"      ~: True ~=? (Anatree.fromList ["a"]       /= Anatree.fromList ["a", "b"]),
+      -- Mismatches: Node _ _ _  t1
+      "['a', 'ab'] /= ['a']"     ~: True ~=? (Anatree.fromList ["a", "ab"] /= Anatree.singleton "a"),
+      "['a'] /= ['a', 'ab']"     ~: True ~=? (Anatree.singleton "a"        /= Anatree.fromList ["a", "ab"])
   ]
   ]
 
