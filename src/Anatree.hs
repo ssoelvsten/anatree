@@ -1,3 +1,8 @@
+#ifdef __GLASGOW_HASKELL__
+{-# LANGUAGE TypeFamilies #-}
+#endif
+
+--------------------------------------------------------------------------------
 -- |
 -- Module      :  Anatree
 -- Copyright   :  (c) 2025 Steffan Sølvsten
@@ -31,6 +36,9 @@ import qualified Data.Monoid   as Monoid
 import qualified Data.Ord      as Ord
 import qualified Data.Set      as Set
 import qualified Anatree.Util  as Util
+#if __GLASGOW_HASKELL__
+import qualified GHC.Exts      as GHCExts
+#endif
 
 -- * Tree Type
 
@@ -51,6 +59,14 @@ instance Eq s => Eq (Tree s) where
     (ws == ws') && (c == c') && (t0 == t0') && (t1 == t1')
   (==) _                 _                     =
     False
+
+#if __GLASGOW_HASKELL__
+-- Conversion between Anagram tree and list
+instance (Ord s) => GHCExts.IsList (Tree s) where
+  type Item (Tree s) = [s]
+  fromList = fromList
+  toList   = toList
+#endif
 
 -- * Construction
 
