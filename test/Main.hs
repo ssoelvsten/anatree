@@ -38,7 +38,7 @@ tests = hUnitTestToTests $ TestList [
   "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t),
   "foldMap"         ~: [] ~=? (Anatree.foldMap (replicate 2) t)
   ],
-  let t = Anatree.fromSet (Set.fromList [""])
+  let t = Anatree.singleton ""
   in "['']" ~: Test.HUnit.TestList [
   "size"            ~: 1     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -70,7 +70,7 @@ tests = hUnitTestToTests $ TestList [
   "foldMap"         ~: ["", ""] ~=? (Anatree.foldMap (replicate 2) t)
   ],
   -- Tests with a single 'a' node [2]
-  let t = Anatree.fromList ["a"]
+  let t = Anatree.singleton "a"
   in "['a']" ~: Test.HUnit.TestList [
   "size"            ~: 1     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
@@ -164,7 +164,7 @@ tests = hUnitTestToTests $ TestList [
   "foldMap"         ~: ["", "", "a", "a"] ~=? (Anatree.foldMap (replicate 2) t)
   ],
   -- Tests with a single 'b' node [2]
-  let t = Anatree.fromSet (Set.fromAscList ["b"])
+  let t = Anatree.singleton "b"
   in "['b']" ~: Test.HUnit.TestList [
   "size"            ~: 1     ~=? (Anatree.size t),
   "null"            ~: False ~=? (Anatree.null t),
