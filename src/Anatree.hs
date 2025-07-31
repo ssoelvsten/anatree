@@ -41,6 +41,17 @@ import qualified Anatree.Util  as Util
 data Tree s = Leaf (Set.Set [s])
             | Node (Set.Set [s]) s (Tree s) (Tree s)
 
+-- Equality checking by tree traversal and comparing the anagrams stored in
+-- each node.
+instance Eq s => Eq (Tree s) where
+  (==) :: Tree s -> Tree s -> Bool
+  (==) (Leaf ws)         (Leaf ws')            =
+    ws == ws'
+  (==) (Node ws c t0 t1) (Node ws' c' t0' t1') =
+    (ws == ws') && (c == c') && (t0 == t0') && (t1 == t1')
+  (==) _                 _                     =
+    False
+
 -- * Construction
 
 -- | /O/(1) Creates an empty anagram tree.
