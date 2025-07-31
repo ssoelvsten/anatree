@@ -47,6 +47,10 @@ data Tree s = Leaf (Set.Set [s])
 empty :: Tree s
 empty = Leaf (Set.empty)
 
+-- | /O/(|/w/| log(|/w/|)) Creates an anagram tree with a single word.
+singleton :: Ord s => [s] -> Tree s
+singleton = fromSet . Set.singleton
+
 -- | Repeated use of `insert` into an `empty` anagram tree.
 fromList :: Ord s => [[s]] -> Tree s
 fromList ws = Prelude.foldr insert empty ws
