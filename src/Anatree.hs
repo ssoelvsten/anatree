@@ -63,6 +63,9 @@ instance (Ord s) => GHCExts.IsList (Tree s) where
   toList   = toList
 #endif
 
+-- Printing as a (debugging) string
+deriving instance Show s => Show (Tree s)
+
 -- * Construction
 
 -- | /O/(1) Creates an empty anagram tree.

@@ -36,7 +36,8 @@ tests = hUnitTestToTests $ TestList [
   "toSet"           ~: (Set.fromList []) ~=? (Anatree.toSet t),
   "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
   "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t),
-  "foldMap"         ~: [] ~=? (Anatree.foldMap (replicate 2) t)
+  "foldMap"         ~: [] ~=? (Anatree.foldMap (replicate 2) t),
+  "show"            ~: "Leaf (fromList [])" ~=? (show t)
   ],
   let t = Anatree.singleton ""
   in "['']" ~: Test.HUnit.TestList [
@@ -67,7 +68,8 @@ tests = hUnitTestToTests $ TestList [
   "toSet"           ~: (Set.fromList [""]) ~=? (Anatree.toSet t),
   "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
   "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t),
-  "foldMap"         ~: ["", ""] ~=? (Anatree.foldMap (replicate 2) t)
+  "foldMap"         ~: ["", ""] ~=? (Anatree.foldMap (replicate 2) t),
+  "show"            ~: "Leaf (fromList [\"\"])" ~=? (show t)
   ],
   -- Tests with a single 'a' node [2]
   let t = Anatree.singleton "a"
@@ -99,7 +101,8 @@ tests = hUnitTestToTests $ TestList [
   "toSet"           ~: (Set.fromList ["a"]) ~=? (Anatree.toSet t),
   "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
   "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t),
-  "foldMap"         ~: ["a", "a"] ~=? (Anatree.foldMap (replicate 2) t)
+  "foldMap"         ~: ["a", "a"] ~=? (Anatree.foldMap (replicate 2) t),
+  "show"            ~: "Node (fromList []) 'a' (Leaf (fromList [])) (Leaf (fromList [\"a\"]))" ~=? (show t)
   ],
   let t = Anatree.fromList ["a", "a"]
   in "['a','a']" ~: Test.HUnit.TestList [
@@ -161,7 +164,8 @@ tests = hUnitTestToTests $ TestList [
   "toSet"           ~: (Set.fromList ["", "a"]) ~=? (Anatree.toSet t),
   "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
   "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t),
-  "foldMap"         ~: ["", "", "a", "a"] ~=? (Anatree.foldMap (replicate 2) t)
+  "foldMap"         ~: ["", "", "a", "a"] ~=? (Anatree.foldMap (replicate 2) t),
+  "show"            ~: "Node (fromList [\"\"]) 'a' (Leaf (fromList [])) (Leaf (fromList [\"a\"]))" ~=? (show t)
   ],
   -- Tests with a single 'b' node [2]
   let t = Anatree.singleton "b"
@@ -193,7 +197,8 @@ tests = hUnitTestToTests $ TestList [
   "toSet"           ~: (Set.fromList ["b"]) ~=? (Anatree.toSet t),
   "foldr"           ~: (Anatree.toList t)           ~=? (Anatree.foldr (:) [] t),
   "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t),
-  "foldMap"         ~: ["b", "b"] ~=? (Anatree.foldMap (replicate 2) t)
+  "foldMap"         ~: ["b", "b"] ~=? (Anatree.foldMap (replicate 2) t),
+  "show"            ~: "Node (fromList []) 'b' (Leaf (fromList [])) (Leaf (fromList [\"b\"]))" ~=? (show t)
   ],
   -- Tests with an 'a,b' chain [2]
   let t = Anatree.fromList ["a", "b"]
