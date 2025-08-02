@@ -168,6 +168,25 @@ union (Node ws c t0 t1) (Node ws' c' t0' t1')
 unions :: (Foldable f, Ord s) => f (Tree s) -> Tree s
 unions = Prelude.foldl union empty
 
+-- | The intersection of two sets. Elements of the result come from the first set.
+intersection :: Ord s => Tree s -> Tree s -> Tree s
+intersection   (Leaf ws)            (Leaf ws')            = Leaf (Set.intersection ws ws')
+intersection   (Leaf ws)            (Node ws' _ _ _)      = Leaf (Set.intersection ws ws')
+intersection   (Node ws _ _  _)     (Leaf ws')            = Leaf (Set.intersection ws ws')
+intersection t@(Node ws c t0 t1) t'@(Node ws' c' t0' t1')
+  | c < c'    = move ws  (intersection t0 t')
+  | c > c'    = move ws' (intersection t t0')
+  | otherwise = let t0'' = intersection t0 t0'
+                    t1'' = intersection t1 t1'
+                    ws'' = Set.intersection ws ws'
+                in if t1'' /= empty then Node ws'' c t0'' t1'' else move ws'' t0''
+  where move iws (Leaf _)               = Leaf iws
+        move iws (Node _ c'' t0'' t1'') = Node iws c'' t0'' t1''
+
+-- | The intersection over a Foldable structure, i.e. `Prelude.foldl1` `intersection`.
+intersections :: (Foldable f, Ord s) => f (Tree s) -> Tree s
+intersections ts = if Prelude.null ts then empty else Prelude.foldl1 intersection ts
+
 -- * Folds
 
 -- | Fold the words in the set using a right-associative binary operator.
