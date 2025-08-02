@@ -150,6 +150,20 @@ treeSize :: Tree s -> Int
 treeSize (Leaf _)         = 1
 treeSize (Node _ _ t0 t1) = 1 + (treeSize t0) + (treeSize t1)
 
+-- * Combine
+
+-- | The union of two sets, preferring the first set when equal elements are encountered.
+union :: Ord s => Tree s -> Tree s -> Tree s
+union (Leaf ws)         (Leaf ws')            = Leaf (Set.union ws ws')
+union (Node ws c t0 t1) (Leaf ws')            = Node (Set.union ws ws') c  t0  t1
+union (Leaf ws)         (Node ws' c' t0' t1') = Node (Set.union ws ws') c' t0' t1'
+union (Node ws c t0 t1) (Node ws' c' t0' t1')
+  | c < c'    = let t' = (Node Set.empty c' t0' t1')
+                in Node (Set.union ws ws') c (union t0 t') (union t1 empty)
+  | c > c'    = let t  = (Node Set.empty c  t0  t1)
+                in Node (Set.union ws ws') c' (union t t0') (union empty t1')
+  | otherwise = Node (Set.union ws ws') c (union t0 t0') (union t1 t1')
+
 -- * Folds
 
 -- | Fold the words in the set using a right-associative binary operator.
