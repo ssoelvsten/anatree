@@ -55,8 +55,8 @@ type Size   = Int
 -- each node.
 deriving instance Eq s => Eq (Tree s)
 
-#if __GLASGOW_HASKELL__
 -- Conversion between Anagram tree and list
+#if __GLASGOW_HASKELL__
 instance (Ord s) => GHCExts.IsList (Tree s) where
   type Item (Tree s) = [s]
   fromList = fromList
