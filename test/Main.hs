@@ -629,6 +629,42 @@ tests = hUnitTestToTests $ TestList [
       -- Mismatches: Node _ _ _  t1
       "['a', 'ab'] /= ['a']"     ~: True ~=? (Anatree.fromList ["a", "ab"] /= Anatree.singleton "a"),
       "['a'] /= ['a', 'ab']"     ~: True ~=? (Anatree.singleton "a"        /= Anatree.fromList ["a", "ab"])
+  ],
+  -- Union
+  let empty = Anatree.empty :: Anatree.Tree Char
+      eps   = Anatree.singleton ""
+      a     = Anatree.singleton "a"
+      b     = Anatree.singleton "b"
+      ab    = Anatree.singleton "ab"
+      ba    = Anatree.singleton "ba"
+      ac    = Anatree.singleton "ac"
+  in "union" ~: Test.HUnit.TestList [
+      -- Merges in leaf (root)
+      "[] U []"         ~: empty ~=? Anatree.union empty empty,
+      "[''] U []"       ~: eps   ~=? Anatree.union eps empty,
+      "[] U ['']"       ~: eps   ~=? Anatree.union empty eps,
+      "[''] U ['']"     ~: eps   ~=? Anatree.union eps eps,
+      -- Merges in leaf (after node)
+      "['a'] U []"      ~: a     ~=? Anatree.union a empty,
+      "[] U ['a']"      ~: a     ~=? Anatree.union empty a,
+      "['a'] U ['a']"   ~: a     ~=? Anatree.union a a,
+      "['b'] U []"      ~: b     ~=? Anatree.union b empty,
+      "[] b ['b']"      ~: b     ~=? Anatree.union empty b,
+      "['b'] U ['b']"   ~: b     ~=? Anatree.union b b,
+      "['ab'] U ['ba']" ~: Anatree.fromList ["ab", "ba"] ~=? Anatree.union ab ba,
+      "['ba'] U ['ab']" ~: Anatree.fromList ["ab", "ba"] ~=? Anatree.union ba ab,
+      -- Merge in node (left early)
+      "['a'] U ['b']"   ~: Anatree.fromList ["a", "b"]   ~=? Anatree.union a b,
+      "['ab'] U ['ac']" ~: Anatree.fromList ["ab", "ac"] ~=? Anatree.union ab ac,
+      -- Merge in node (right early)
+      "['b'] U ['a']"   ~: Anatree.fromList ["a", "b"]   ~=? Anatree.union b a,
+      "['ac'] U ['ab']" ~: Anatree.fromList ["ab", "ac"] ~=? Anatree.union ac ab,
+      -- Merge in node (match)
+      "['a'] U ['ab']"  ~: Anatree.fromList ["a", "ab"] ~=? Anatree.union a ab,
+      "['ab'] U ['a']"  ~: Anatree.fromList ["a", "ab"] ~=? Anatree.union ab a,
+      "([''] U ['ab']) U (['a'] U ['b'])" ~:
+        Anatree.fromList ["", "a", "b", "ab"] ~=? Anatree.union (Anatree.union eps ab)
+                                                                (Anatree.union a   b)
   ]
   ]
 
