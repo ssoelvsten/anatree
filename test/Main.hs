@@ -665,6 +665,19 @@ tests = hUnitTestToTests $ TestList [
       "([''] U ['ab']) U (['a'] U ['b'])" ~:
         Anatree.fromList ["", "a", "b", "ab"] ~=? Anatree.union (Anatree.union eps ab)
                                                                 (Anatree.union a   b)
+  ],
+  let empty = Anatree.empty :: Anatree.Tree Char
+      eps   = Anatree.singleton ""
+      a     = Anatree.singleton "a"
+      b     = Anatree.singleton "b"
+      ab    = Anatree.singleton "ab"
+  in "unions" ~: Test.HUnit.TestList [
+    "[]"               ~: empty                             ~=? Anatree.unions [],
+    "['']"             ~: Anatree.fromList [""]             ~=? Anatree.unions [eps],
+    "['a']"            ~: Anatree.fromList ["a"]            ~=? Anatree.unions [a],
+    "['a', 'b']"       ~: Anatree.fromList ["a", "b"]       ~=? Anatree.unions [a, b],
+    "['b', 'a']"       ~: Anatree.fromList ["a", "b"]       ~=? Anatree.unions [b, a],
+    "['b', 'a', 'ab']" ~: Anatree.fromList ["a", "b", "ab"] ~=? Anatree.unions [b, a, ab]
   ]
   ]
 

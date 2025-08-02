@@ -164,6 +164,10 @@ union (Node ws c t0 t1) (Node ws' c' t0' t1')
                 in Node (Set.union ws ws') c' (union t t0') (union empty t1')
   | otherwise = Node (Set.union ws ws') c (union t0 t0') (union t1 t1')
 
+-- | The union over a Foldable structure, i.e. `Prelude.foldl` `union` `empty`.
+unions :: (Foldable f, Ord s) => f (Tree s) -> Tree s
+unions = Prelude.foldl union empty
+
 -- * Folds
 
 -- | Fold the words in the set using a right-associative binary operator.
