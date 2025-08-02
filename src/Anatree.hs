@@ -53,14 +53,7 @@ type Size   = Int
 
 -- Equality checking by tree traversal and comparing the anagrams stored in
 -- each node.
-instance Eq s => Eq (Tree s) where
-  (==) :: Tree s -> Tree s -> Bool
-  (==) (Leaf ws)         (Leaf ws')            =
-    ws == ws'
-  (==) (Node ws c t0 t1) (Node ws' c' t0' t1') =
-    (ws == ws') && (c == c') && (t0 == t0') && (t1 == t1')
-  (==) _                 _                     =
-    False
+deriving instance Eq s => Eq (Tree s)
 
 #if __GLASGOW_HASKELL__
 -- Conversion between Anagram tree and list
