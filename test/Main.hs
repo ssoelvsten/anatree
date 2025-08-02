@@ -678,6 +678,44 @@ tests = hUnitTestToTests $ TestList [
     "['a', 'b']"       ~: Anatree.fromList ["a", "b"]       ~=? Anatree.unions [a, b],
     "['b', 'a']"       ~: Anatree.fromList ["a", "b"]       ~=? Anatree.unions [b, a],
     "['b', 'a', 'ab']" ~: Anatree.fromList ["a", "b", "ab"] ~=? Anatree.unions [b, a, ab]
+  ],
+  -- Intersection
+  "intersection" ~: Test.HUnit.TestList [
+      -- Leaf
+      "[] ∩ ['']"             ~: Anatree.empty         ~=? Anatree.intersection (Anatree.empty)         (Anatree.fromList [""]),
+      "[''] ∩ ['']"           ~: Anatree.fromList [""] ~=? Anatree.intersection (Anatree.fromList [""]) (Anatree.fromList [""]),
+      -- Leaf vs. Node
+      "[] ∩ ['a']"            ~: Anatree.empty ~=? Anatree.intersection (Anatree.empty)          (Anatree.fromList ["a"]),
+      "['b'] ∩ ['']"          ~: Anatree.empty ~=? Anatree.intersection (Anatree.fromList ["b"]) (Anatree.fromList [""]),
+      "['', 'b'] ∩ ['']"      ~: Anatree.fromList [""] ~=? Anatree.intersection (Anatree.fromList ["", "b"]) (Anatree.fromList [""]),
+      -- Nodes (mismatching char)
+      "['a'] ∩ ['b']"         ~: Anatree.empty ~=? Anatree.intersection (Anatree.fromList ["a"]) (Anatree.fromList ["b"]),
+      "['b'] ∩ ['a']"         ~: Anatree.empty ~=? Anatree.intersection (Anatree.fromList ["b"]) (Anatree.fromList ["a"]),
+      "['ac'] ∩ ['ab', 'ac']" ~: Anatree.fromList ["ac"] ~=? Anatree.intersection (Anatree.fromList ["ac"]) (Anatree.fromList ["ab", "ac"]),
+      "['ab', 'ac'] ∩ ['ac']" ~: Anatree.fromList ["ac"] ~=? Anatree.intersection (Anatree.fromList ["ab", "ac"]) (Anatree.fromList ["ac"]),
+      -- Nodes (matching char, but true-branch becomes empty)
+      "['ab'] ∩ ['a']"        ~: Anatree.empty ~=? Anatree.intersection (Anatree.fromList ["ab"]) (Anatree.fromList ["a"]),
+      "['a'] ∩ ['ab']"        ~: Anatree.empty ~=? Anatree.intersection (Anatree.fromList ["a"]) (Anatree.fromList ["ab"]),
+      "['ab'] ∩ ['ac']"       ~: Anatree.empty ~=? Anatree.intersection (Anatree.fromList ["ab"]) (Anatree.fromList ["ac"]),
+      "['ac'] ∩ ['ab']"       ~: Anatree.empty ~=? Anatree.intersection (Anatree.fromList ["ac"]) (Anatree.fromList ["ab"]),
+      -- Nodes (matching char and true-branch becomes non-empty)
+      "['a'] ∩ ['', 'a']"     ~: Anatree.fromList ["a"]  ~=? Anatree.intersection (Anatree.fromList ["a"]) (Anatree.fromList ["", "a"]),
+      "['', 'a'] ∩ ['a']"     ~: Anatree.fromList ["a"]  ~=? Anatree.intersection (Anatree.fromList ["", "a"]) (Anatree.fromList ["a"]),
+      "['a'] ∩ ['a', 'ab']"   ~: Anatree.fromList ["a"]  ~=? Anatree.intersection (Anatree.fromList ["a"]) (Anatree.fromList ["a", "ab"]),
+      "['a', 'ab'] ∩ ['a']"   ~: Anatree.fromList ["a"]  ~=? Anatree.intersection (Anatree.fromList ["a", "ab"]) (Anatree.fromList ["a"]),
+      "['ab'] ∩ ['ab', 'ac']" ~: Anatree.fromList ["ab"] ~=? Anatree.intersection (Anatree.fromList ["ab"]) (Anatree.fromList ["ab", "ac"]),
+      "['ab', 'ac'] ∩ ['ab']" ~: Anatree.fromList ["ab"] ~=? Anatree.intersection (Anatree.fromList ["ab", "ac"]) (Anatree.fromList ["ab"]),
+      -- Nodes (matching char but false branch becomes empty)
+      "['a'] ∩ ['a', 'b']"    ~: Anatree.fromList ["a"]  ~=? Anatree.intersection (Anatree.fromList ["a"]) (Anatree.fromList ["a", "b"]),
+      "['a', 'b'] ∩ ['a']"    ~: Anatree.fromList ["a"]  ~=? Anatree.intersection (Anatree.fromList ["a", "b"]) (Anatree.fromList ["a"])
+  ],
+  let empty = Anatree.empty :: Anatree.Tree Char
+  in "intersections" ~: Test.HUnit.TestList [
+      "[]"                             ~: empty ~=? Anatree.intersections [],
+      "[['', 'a'], ['a'], ['']]"       ~: empty ~=? Anatree.intersections [Anatree.fromList ["", "a"], Anatree.fromList ["a"], Anatree.fromList [""]],
+      "[['', 'a'], ['a']]"             ~: Anatree.fromList ["a"] ~=? Anatree.intersections [Anatree.fromList ["", "a"], Anatree.fromList ["a"]],
+      "[['a'], ['a', 'b']]"            ~: Anatree.fromList ["a"] ~=? Anatree.intersections [Anatree.fromList ["a"], Anatree.fromList ["a", "b"]],
+      "[['', 'a'], ['a'], ['a', 'b']]" ~: Anatree.fromList ["a"] ~=? Anatree.intersections [Anatree.fromList ["", "a"], Anatree.fromList ["a"], Anatree.fromList ["a", "b"]]
   ]
   ]
 
