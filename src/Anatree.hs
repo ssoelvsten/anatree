@@ -97,6 +97,22 @@ insert w t = insert' (List.sort w) t
           | x > c     = Node ws c (insert' (x:xs) t0)      t1
           | otherwise = Node ws c t0                       (insert' xs t1)
 
+-- * Deletion
+
+-- | /O/(|/w/| log |/w/| + |Σ|) Remove word from the set.
+delete :: Ord s => [s] -> Tree s -> Tree s
+delete w t = delete' (List.sort w) t
+  where delete' []        (Leaf ws)         = Leaf (Set.delete w ws)
+        delete' []        (Node ws c t0 t1) = Node (Set.delete w ws) c t0 t1
+        delete' (_:_)  t'@(Leaf _)          = t'
+        delete' (x:xs) t'@(Node ws c t0 t1)
+          | x < c     = t'
+          | x > c     = Node ws c (delete' (x:xs) t0) t1
+          | otherwise = let t1' = delete' xs t1
+                        in if t1' == empty then move ws t0 else Node ws c t0 t1'
+        move ws (Leaf _)         = Leaf ws
+        move ws (Node _ c t0 t1) = Node ws c t0 t1
+
 -- * Queries
 
 -- | /O/(|/w/| log |/w/| + |Σ|) The anagrams that exists in the set.
