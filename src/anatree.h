@@ -40,6 +40,24 @@
 #include <iterator>
 
 ////////////////////////////////////////////////////////////////////////////////
+/// \mainpage
+/// # Anagram Tree
+///
+/// The *anagram tree* (\ref anatree) is a data structure specifically designed
+/// to efficiently store a dictionary of words such that (sub)anagrams can be
+/// identified quickly. See \ref anatree for all operations supported.
+///
+/// To achieve its efficiency, it makes use of a trie-like representation that
+/// has properties quite similar to Binary Decision Diagrams (BDDs). See the
+/// [paper](https://dl.acm.org/doi/abs/10.1145/2133803.2133804) by Charles Brown
+/// or the following
+/// [slides](https://raw.githubusercontent.com/SSoelvsten/slides/out/anatree.pdf)
+/// by Steffan Sølvsten for more details.
+///
+/// \author Steffan Sølvsten and Andreas H. H. Hansen
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
 /// \brief A data structure capable of storing a set of 'std::string' (or
 ///        similar) data structures, enabling quick access to all 'anagrams' of
 ///        each word (within or not).
