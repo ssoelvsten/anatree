@@ -34,7 +34,10 @@ uninstall:
 #  DOCUMENTATION
 # ============================================================================ #
 docs:
-	@echo "No Doxygen documentation supported"
+	@mkdir -p build/
+	@cd build/ && cmake ..
+
+	@cd build/ && $(MAKE) anatree_docs
 
 # ============================================================================ #
 #  UNIT TESTS
