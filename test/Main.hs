@@ -607,6 +607,23 @@ tests = hUnitTestToTests $ TestList [
   "foldl"           ~: (reverse $ Anatree.toList t) ~=? (Anatree.foldl (flip (:)) [] t),
   "foldMap"         ~: ["b", "b", "a", "a", "ac", "ac"] ~=? (Anatree.foldMap (replicate 2) t)
   ],
+  -- Deletion
+  "delete" ~: Test.HUnit.TestList [
+    -- Failed search
+    "[] - ''"          ~: Anatree.empty ~=? Anatree.delete "" (Anatree.empty),
+    "['a'] - ''"       ~: Anatree.singleton "a" ~=? Anatree.delete "" (Anatree.singleton "a"),
+    "['a'] - 'b'"      ~: Anatree.singleton "a" ~=? Anatree.delete "b" (Anatree.singleton "a"),
+    "['a', 'c'] - 'b'" ~: Anatree.fromList ["a", "c"] ~=? Anatree.delete "b" (Anatree.fromList ["a", "c"]),
+    -- Leaf deletion
+    "[''] - ''"                ~: Anatree.empty ~=? Anatree.delete "" (Anatree.singleton ""),
+    "['a', 'ab', 'ba'] - 'ab'" ~: Anatree.fromList ["a", "ba"] ~=? Anatree.delete "ab" (Anatree.fromList ["a", "ab", "ba"]),
+    "['a', 'b', 'ab'] - 'b'"   ~: Anatree.fromList ["a", "ab"] ~=? Anatree.delete "b" (Anatree.fromList ["a", "b", "ab"]),
+    "['a', 'b', 'bb'] - 'bb'"  ~: Anatree.fromList ["a", "b"] ~=? Anatree.delete "bb" (Anatree.fromList ["a", "b", "bb"]),
+    -- Leaf deletion (including propagation)
+    "['ab', 'b'] - 'ab'" ~: Anatree.fromList ["b"] ~=? Anatree.delete "ab" (Anatree.fromList ["ab", "b"]),
+    -- Inner node deletion
+    "['a', 'b', 'ab'] - 'a'" ~: Anatree.fromList ["b", "ab"] ~=? Anatree.delete "a" (Anatree.fromList ["a", "b", "ab"])
+  ],
   -- Equality Checking
   "Eq (==) (/=)" ~: Test.HUnit.TestList [
       -- Matches
