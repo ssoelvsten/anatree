@@ -1,0 +1,21 @@
+name: 'cpp/header-only'
+
+on:
+  push:
+    branches:
+    - cpp/main
+
+jobs:
+  publish:
+    name: 'Publish to cpp/header-only'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: cpp/main
+
+    - uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        branch: cpp/header-only
+        folder: ${{github.workspace}}/src/

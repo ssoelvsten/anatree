@@ -1,0 +1,13 @@
+######################
+# Emacs
+*.~undo-tree~
+.#*
+
+######################
+# CMake
+build/
+
+######################
+# LCOV
+coverage.info
+tests/report
