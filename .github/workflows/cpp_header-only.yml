@@ -15,7 +15,7 @@ jobs:
       with:
         ref: main
 
-    - uses: JamesIves/github-pages-deploy-action@4.1.4
+    - uses: JamesIves/github-pages-deploy-action@v4.7.3
       with:
         branch: cpp/header-only
         folder: ${{github.workspace}}/cpp/src/
