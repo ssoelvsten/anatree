@@ -2,9 +2,11 @@ name: 'hs/test'
 
 on:
   push:
-    branches: [ hs/main ]
+    branches: [ main ]
   pull_request:
-    branches: [ hs/main ]
+    branches: [ main ]
+  pull_request_target:
+    branches: [ main ]
 
 jobs:
   test:
@@ -12,10 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: 'Checkout `hs/main` branch'
-      uses: actions/checkout@v4
-      with:
-        ref: hs/main
+    - uses: actions/checkout@v5
 
     - name: 'Set up Haskell and Cabal'
       uses: haskell-actions/setup@v2
@@ -24,5 +23,6 @@ jobs:
         cabal-version: '3.10.3.0'
 
     - name: 'Run Tests'
+      working-directory: ${{runner.workspace}}/anatree/hs
       run: |
         cabal test
