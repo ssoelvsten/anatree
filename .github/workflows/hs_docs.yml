@@ -1,0 +1,35 @@
+name: 'hs/docs'
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  pull_request_target:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: 'Unit Test (Haskell)'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v5
+
+    - name: 'Set up Haskell and Cabal'
+      uses: haskell-actions/setup@v2
+      with:
+        ghc-version: '9.6.6'
+        cabal-version: '3.10.3.0'
+
+    - name: 'Haddock'
+      working-directory: ${{runner.workspace}}/anatree/hs
+      run: |
+        cabal haddock
+        mv ./dist-newstyle/build/*/*/Anatree-*/doc/html/Anatree/ docs
+
+    - uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        folder: ${{github.workspace}}/hs/docs
+        branch: gh-pages
+        target-folder: hs

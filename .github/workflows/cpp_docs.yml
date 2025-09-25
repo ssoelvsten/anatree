@@ -1,0 +1,42 @@
+name: 'cpp/docs'
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: 'Docs (C++)'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        submodules: 'recursive'
+
+    - name: 'Set up C++ and Doxygen'
+      run: |
+        sudo apt install doxygen
+
+    - name: CMake | mkdir build
+      working-directory: ${{runner.workspace}}/anatree/cpp
+      run: |
+        cmake -E make_directory ${{runner.workspace}}/anatree/cpp/build
+
+    - name: CMake | configure
+      working-directory: ${{runner.workspace}}/anatree/cpp/build
+      env:
+        C_FLAGS: "-g -O0 -Wall -fprofile-arcs -ftest-coverage"
+        EXE_LINKER_FLAGS: "-fprofile-arcs -ftest-coverage"
+      run: |
+        cmake -Wno-dev ..
+
+    - name: CMake | build unit tests
+      working-directory: ${{runner.workspace}}/anatree/cpp/build
+      run: cmake --build . --target anatree_docs
+
+    - uses: JamesIves/github-pages-deploy-action@4.1.4
+      with:
+        folder: ${{github.workspace}}/cpp/build/docs/html
+        branch: gh-pages
+        target-folder: cpp
