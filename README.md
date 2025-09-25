@@ -9,17 +9,17 @@ e.g. finding within a dictionary all (sub)anagrams of a given word.
 ## Implementations
 
 ### C++
-[![cpp/test](https://github.com/SSoelvsten/anatree/actions/workflows/cpp_test.yml/badge.svg)](https://github.com/SSoelvsten/anatree/actions/workflows/cpp__test.yml)
+[![cpp/test](https://github.com/SSoelvsten/anatree/actions/workflows/cpp_test.yml/badge.svg)](https://github.com/SSoelvsten/anatree/actions/workflows/cpp_test.yml)
 &nbsp;
 [![codecov](https://codecov.io/gh/SSoelvsten/anatree/branch/main/graph/badge.svg?token=j4JA35K7Ec)](https://codecov.io/gh/SSoelvsten/anatree)
 
-- [`cpp/main`](https://github.com/ssoelvsten/anatree/tree/cpp/main)
+- [`cpp/`](./cpp/)
 
-  Development branch for the C++ implementation, including tests and more.
+  Subproject with the C++ implementation, including tests and more.
 
 - [`cpp/header-only`](https://github.com/ssoelvsten/anatree/tree/cpp/header-only)
 
-  The *anatree.h* file and its CMake only for easy inclusion in your project.
+  Branch with the *anatree.h* file and its CMake only for easy inclusion in your project.
 
 **Authors:** Steffan Sølvsten ([@ssoelvsten](github.com/ssoelvsten/)) and
 Andreas H. H. Hansen ([@APersonH](https://github.com/APersonH))
@@ -30,9 +30,9 @@ Andreas H. H. Hansen ([@APersonH](https://github.com/APersonH))
 
 [![hs/test](https://github.com/ssoelvsten/anatree/actions/workflows/hs_test.yml/badge.svg)](https://github.com/ssoelvsten/anatree/actions/workflows/hs_test.yml)
 
-- [`hs/main`](https://github.com/ssoelvsten/anatree/tree/hs/main)
+- [`hs/`](./hs/)
 
-  Development branch for the Haskell implementation, including tests and more.
+  Subproject with the Haskell implementation, including tests and more.
 
 **Authors:** Steffan Sølvsten ([@ssoelvsten](github.com/ssoelvsten/))
 
