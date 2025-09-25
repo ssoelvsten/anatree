@@ -28,7 +28,7 @@ jobs:
         cabal haddock
         mv ./dist-newstyle/build/*/*/Anatree-*/doc/html/Anatree/ docs
 
-    - uses: JamesIves/github-pages-deploy-action@4.1.4
+    - uses: JamesIves/github-pages-deploy-action@v4.7.3
       with:
         folder: ${{github.workspace}}/hs/docs
         branch: gh-pages
