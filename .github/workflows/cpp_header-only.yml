@@ -3,7 +3,7 @@ name: 'cpp/header-only'
 on:
   push:
     branches:
-    - cpp/main
+    - main
 
 jobs:
   publish:
@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
-        ref: cpp/main
+        ref: main
 
     - uses: JamesIves/github-pages-deploy-action@4.1.4
       with:
         branch: cpp/header-only
-        folder: ${{github.workspace}}/src/
+        folder: ${{github.workspace}}/cpp/src/

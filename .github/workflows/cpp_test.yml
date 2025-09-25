@@ -1,0 +1,60 @@
+name: 'cpp/test'
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  pull_request_target:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: 'Unit Test + Coverage (C++)'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        submodules: 'recursive'
+
+    - name: Apt | install lcov
+      working-directory: ${{runner.workspace}}/anatree/cpp
+      run: |
+        sudo apt update
+        sudo apt install lcov
+
+    - name: CMake | mkdir build
+      working-directory: ${{runner.workspace}}/anatree/cpp
+      run: |
+        cmake -E make_directory ${{runner.workspace}}/anatree/cpp/build
+
+    - name: CMake | configure
+      working-directory: ${{runner.workspace}}/anatree/cpp/build
+      env:
+        C_FLAGS: "-g -O0 -Wall -fprofile-arcs -ftest-coverage"
+        EXE_LINKER_FLAGS: "-fprofile-arcs -ftest-coverage"
+      run: |
+        cmake $GITHUB_WORKSPACE -D CMAKE_BUILD_TYPE=DEBUG -D CMAKE_C_FLAGS="${C_FLAGS}" -D CMAKE_CXX_FLAGS="${C_FLAGS}" -D CMAKE_EXE_LINKER_FLAGS="${EXE_LINKER_FLAGS}" ..
+
+    - name: CMake | build unit tests
+      working-directory: ${{runner.workspace}}/anatree/cpp/build
+      run: cmake --build . --target anatree_test
+
+    - name: Run unit tests
+      working-directory: ${{runner.workspace}}/anatree/cpp/build
+      run: |
+        ./tests/anatree_test --reporter=info --colorizer=light
+
+    - name: Generate code coverage report
+      working-directory: ${{runner.workspace}}/anatree/cpp
+      if: always()
+      run: |
+        lcov -c -d build/ -o ./coverage.info
+        lcov --ignore-errors empty --remove coverage.info --output-file coverage.info "/usr/*" "*/external/*" "*tests*"
+
+    - name: Upload report to Codecov.io
+      working-directory: ${{runner.workspace}}/anatree/cpp
+      if: always()
+      run: |
+        bash <(curl -s https://codecov.io/bash) -f coverage.info -t ${{ secrets.CODECOV_TOKEN }}
