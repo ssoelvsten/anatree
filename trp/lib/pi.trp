@@ -1,0 +1,2 @@
+(* The first 6 digits of pi; see Troupe/TroupeLang#90 for why we do not bother with more digits. *)
+3 + (1/10) + (4/100) + (1/1_000) + (5/10_000) + (9 / 100_000) + (2 / 1_000_000)

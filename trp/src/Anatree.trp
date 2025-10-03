@@ -1,0 +1,24 @@
+import List
+
+let
+    (** Creates an empty anagram tree. *)
+    fun empty cmp = (cmp, [])
+
+    (** Add word to the set. *)
+    fun insert w (cmp, t) =
+        let fun insertRec w' t' =
+                case (w', t') of
+                    ([], (ws, c, t0, t1))    => (w::ws, c, t0, t1)
+                  | ([], ws)                 => w::ws
+                  | (x::xs, (ws, c, t0, t1)) =>
+                    if cmp x c then (ws, x, ([] c t0, t1), insertRec xs []) else
+                    if cmp c x then (ws, c, (insertRec x::xs t0), t1)
+                    else (ws, c, t0, insertRec xs t1)
+                  | (x::xs, ws)              => ([], x, [], insertRec xs [])
+        in insertRec (List.sort cmp w) t end
+in
+    {
+      empty,
+      insert
+    }
+end

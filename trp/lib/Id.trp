@@ -1,0 +1,2 @@
+(* Simple module initialisation test. *)
+fn x => x
