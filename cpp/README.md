@@ -1,6 +1,6 @@
 # Anatree (C++)
 
-[![LGPL-3.0 License](https://img.shields.io/badge/license-LGPL%203.0-blue.svg)](COPYING.LESSER.md)
+[![LGPL-3.0 License](https://img.shields.io/badge/license-LGPL%203.0-blue.svg)](../COPYING.LESSER.md)
 &nbsp;
 [![tests](https://github.com/SSoelvsten/anatree/actions/workflows/cpp_test.yml/badge.svg)](https://github.com/SSoelvsten/anatree/actions/workflows/cpp_test.yml)
 &nbsp;
@@ -69,7 +69,8 @@ make anatree_test
 ./tests/anatree_test
 cd ..
 ```
+
 ## License
 
 The software and documentation files in this repository are provided under the
-[*GNU Lesser General Public License* v3.0](/LICENSE.md) .
+[*GNU Lesser General Public License* v3.0](../COPYING.LESSER.md) .
