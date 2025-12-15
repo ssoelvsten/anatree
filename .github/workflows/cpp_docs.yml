@@ -35,7 +35,7 @@ jobs:
       working-directory: ${{runner.workspace}}/anatree/cpp/build
       run: cmake --build . --target anatree_docs
 
-    - uses: JamesIves/github-pages-deploy-action@v4.7.4
+    - uses: JamesIves/github-pages-deploy-action@v4.7.6
       with:
         folder: ${{github.workspace}}/cpp/build/docs/html
         branch: gh-pages
